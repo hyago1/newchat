@@ -15,9 +15,11 @@ var list = document.getElementById('list_ul')
 
 
 
-function teste() {
+function send() {
    
-list.innerHTML = ""
+if (boxmsg.value != "") {
+    
+    list.innerHTML = ""
 msg.msg.push(boxmsg.value)
 
 msg.msg.map((value) =>{
@@ -29,6 +31,11 @@ msg.msg.map((value) =>{
 </div>
 </li>`
     })
+    boxmsg.value = null
+}
+
+
+
 
 }
 

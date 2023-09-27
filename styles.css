@@ -14,7 +14,7 @@ header{
     position: fixed;
 top: 0px;
     width: 100%;
-height: 20px;
+height: 30px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -31,12 +31,24 @@ h2{
     overflow-y: auto;
 }
 .group_msgt{
+    margin: 5px;
     width: 100%;
     display: flex;
    position: fixed;
    bottom: 0px;
     align-items: center;
 justify-content: center;
+}
+.group_msgt div{
+display: flex;
+    margin-right: 5px;
+    border: 1px solid grey;
+    background-color: transparent;
+width: 92%;
+height: auto;
+    
+    border-radius: 7px;
+    color: hsl(0, 0%, 83%);
 }
 ul{
     margin-top: 5em;
@@ -64,22 +76,23 @@ font-family: 'Raleway', sans-serif;
     border: 1px solid grey;
     border-radius: 7px;
     margin: 5px;
+    width: auto;
 }
 
 #box_Msg{
     outline: 0;
-    margin-right: 5px;
-    border: 1px solid grey;
     background-color: transparent;
-    width: 80%;
+    width: 100%;
     padding: 1.2em;
-    border-radius: 7px;
+    border: none;
     color: hsl(0, 0%, 83%);
 }
 #btn{
     cursor: pointer;
     border: none;
-    background-color: #969696;
+    width: 5em;
+    border-left: 1px grey solid;
+    background-color: transparent;
 }
 .msgt ,#btn{
     padding: 10px;
