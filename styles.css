@@ -1,4 +1,7 @@
 body{
+    font-family: 'Inter', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    user-select: none;
     margin: 0px;
     background-color: rgb(36, 36, 36);
     display: flex;
@@ -64,6 +67,7 @@ font-family: 'Raleway', sans-serif;
 }
 
 #box_Msg{
+    outline: 0;
     margin-right: 5px;
     border: 1px solid grey;
     background-color: transparent;
@@ -73,6 +77,7 @@ font-family: 'Raleway', sans-serif;
     color: hsl(0, 0%, 83%);
 }
 #btn{
+    cursor: pointer;
     border: none;
     background-color: #969696;
 }
