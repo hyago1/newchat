@@ -64,9 +64,11 @@ msg=[]
     const { error } = await _supabase
       .from("mensages")
       .insert({ datamsg: valueBoxMenssage });
-  
+      document.getElementById('box_Msg').value = ""
   }
-  boxmsg.value = null;
+  
+
+
 }
 
 async function delet(index) {
