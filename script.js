@@ -40,7 +40,7 @@ const updateList = () => {
     </li>`;
     });
     setTimeout(list.scrollIntoView({ behavior: "smooth" }), 300);
-    boxmsg.value = null;
+   
   });
 };
 
@@ -66,6 +66,7 @@ msg=[]
       .insert({ datamsg: valueBoxMenssage });
   
   }
+  boxmsg.value = null;
 }
 
 async function delet(index) {
