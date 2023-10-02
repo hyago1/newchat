@@ -87,6 +87,16 @@ font-family: 'Raleway', sans-serif;
     border: none;
     color: hsl(0, 0%, 83%);
 }
+.ball_msg div{
+    display: flex;
+    justify-content: space-between;
+
+}
+#delete{
+    border: none;
+    padding: 5px;
+    background-color: rgba(59, 59, 59, 0.418);
+}
 #btn{
     cursor: pointer;
     border: none;
