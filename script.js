@@ -9,7 +9,18 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 var msg = [];
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
+var dt = new Date()
+
 //variaveis
+
+
+function getHour(){
+  let hour = dt.getHours()
+  let minutes = dt.getMinutes()
+  let time = hour+":"+minutes
+  return  time
+} 
+
 
 async function init() {
   const { data, error } = await _supabase.from("mensages").select();
@@ -27,22 +38,45 @@ const updateList = () => {
     });
  
     msg.map((value,index) => {
-        console.log(value);
+
+
+
+let formatedTime = value.created_at.slice(0,5)
+console.log(formatedTime);
+console.log(value.created_at);
       list.innerHTML += `<li>
     <div class="ball_msg">
+    <div class='info_details'>  
+
         <span class="nickname_ball_msg">Ze</span>
-        <div > 
-        <span class="msg">${value.datamsg}</span>
         <button id='delete' onclick='delet(${value.id})'>X</button>
+
+        </div>
+ 
+        <div class='info' > 
+        <span class="msg">${value.datamsg}</span>
+        <span id='hour'>${formatedTime}</span>
+        
         </div>
        
     </div>
     </li>`;
+
+
+  
+
     });
-    setTimeout(list.scrollIntoView({ behavior: "smooth" }), 300);
+
+  
    
   });
 };
+
+
+
+function lastElement() {
+  
+}
 
 _supabase
   .channel("custom-all-channel")
@@ -63,8 +97,10 @@ msg=[]
   if (boxmsg.value != "") {
     const { error } = await _supabase
       .from("mensages")
-      .insert({ datamsg: valueBoxMenssage });
+      .insert({ datamsg: valueBoxMenssage, created_at: getHour() });
       document.getElementById('box_Msg').value = ""
+
+     
   }
   
 

@@ -63,6 +63,7 @@ font-family: 'Raleway', sans-serif;
     width: auto;
 }
 .nickname_ball_msg{
+    width: 20%;
     font-weight: bold;
 }
 .ball_msg{
@@ -87,15 +88,19 @@ font-family: 'Raleway', sans-serif;
     border: none;
     color: hsl(0, 0%, 83%);
 }
-.ball_msg div{
+.info{
     display: flex;
     justify-content: space-between;
 
 }
+.info_details{
+    display: flex;
+    justify-content: space-between;
+}
 #delete{
     border: none;
-    padding: 5px;
-    background-color: rgba(59, 59, 59, 0.418);
+    padding: 2px;
+    background-color: rgba(59, 59, 59, 0.226);
 }
 #btn{
     cursor: pointer;
@@ -106,4 +111,8 @@ font-family: 'Raleway', sans-serif;
 }
 .msgt ,#btn{
     padding: 10px;
+}
+::-webkit-scrollbar {
+    width: 5px;
+   
 }
