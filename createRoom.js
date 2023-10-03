@@ -16,21 +16,12 @@ async function getId() {
   document.execCommand("copy");
 }
 
-_supabase
-  .channel("custom-all-channel")
-  .on(
-    "postgres_changes",
-    { event: "*", schema: "public", table: "salas" },
-    (payload) => {}
-  )
-  .subscribe();
+
 
 async function enterRoom() {
-    if (inputBoxCode.value!="") {
-        try {
+   
    const { error } = await _supabase.from("salas").insert({ key_room: code });
- } catch (error) {}
-  window.location.assign("/chat.html");
-    }
  
+  window.location.assign("/chat.html");
+     
 }
