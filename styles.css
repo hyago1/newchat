@@ -3,7 +3,7 @@ body{
     font-family: 'Raleway', sans-serif;
     user-select: none;
     margin: 0px;
-    background-color: rgb(27 29 30);;
+    background-color: rgb(18, 18, 20);;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@ h2{
     margin: 0px;
 }
 .area_Menssage{
-    background-color: rgb(27 29 30);;
+    background-color:transparent;
     width: 95%;
     height: 90vh;
     overflow-y: auto;
@@ -42,17 +42,18 @@ justify-content: center;
 .group_msgt div{
 display: flex;
     margin-right: 5px;
-    border: 1px solid grey;
+    border: 1px solid rgb(155, 155, 155);
     background-color: transparent;
 width: 92%;
 height: auto;
-    
     border-radius: 7px;
     color: hsl(0, 0%, 83%);
+  
 }
 ul{
     margin-top: 5em;
     padding: 0px;
+
     
 }
 .msg{
@@ -60,24 +61,37 @@ ul{
 font-family: 'Raleway', sans-serif;
     color: #d3d3d3;
     margin: 4px;
+    margin-right: 15px;
     width: auto;
+    word-break: break-all;
 }
 .nickname_ball_msg{
+    
     width: 20%;
     font-weight: bold;
 }
+
+
+#hour{
+
+    font-size: 12px;
+    position: relative;
+    top: 10px;
+}
 .ball_msg{
+    
     padding: 2px;
     display: flex;
     flex-direction: column;
-    width: auto;
-    background-color: transparent;
+    background-color: #000000;
     color: aliceblue;
     padding: 8px;
-    border: 1px solid grey;
+    border: 1px solid #000000;
     border-radius: 7px;
     margin: 5px;
-    width: auto;
+
+    width: fit-content;
+
 }
 
 #box_Msg{
@@ -89,25 +103,32 @@ font-family: 'Raleway', sans-serif;
     color: hsl(0, 0%, 83%);
 }
 .info{
+   
     display: flex;
     justify-content: space-between;
 
 }
 .info_details{
+
     display: flex;
     justify-content: space-between;
 }
 #delete{
     border: none;
     padding: 2px;
-    background-color: rgba(59, 59, 59, 0.226);
+    background-color:transparent;
 }
 #btn{
+    color: aliceblue;
     cursor: pointer;
     border: none;
     width: 5em;
     border-left: 1px grey solid;
     background-color: transparent;
+}
+#btn:hover{
+   font-size: 20px;
+   transition: 0.4s;
 }
 .msgt ,#btn{
     padding: 10px;

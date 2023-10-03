@@ -10,26 +10,24 @@ var msg = [];
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
 var codeInfo = document.getElementById("code");
-var dt = new Date()
+var dt = new Date();
 
 //variaveis
 
+function getHour() {
+  let hour = dt.getHours();
+  let minutes = dt.getMinutes();
+  let time = hour + ":" + minutes;
+  return time;
+}
 
-
-function getHour(){
-  let hour = dt.getHours()
-  let minutes = dt.getMinutes()
-  let time = hour+":"+minutes
-  return  time
-} 
-
-let code
-let codeCheck = false
+let code;
+let codeCheck = false;
 async function init() {
-
-
-
-  const { data, error } = await _supabase.from("mensages").select().eq('key_room_message',code);
+  const { data, error } = await _supabase
+    .from("mensages")
+    .select()
+    .eq("key_room_message", code);
 
   return data;
 }
@@ -37,35 +35,29 @@ async function init() {
 const updateList = () => {
   console.log(code);
   if (!codeCheck) {
-    code = prompt("Digite o código da sala")
- codeCheck = true
+    code = prompt("Digite o código da sala");
+    codeCheck = true;
   }
-  
 
   msg = [];
   list.innerHTML = "";
 
-
-codeInfo.textContent = code
+  codeInfo.textContent = code;
 
   init().then((value) => {
-
     value.forEach((element) => {
       msg.push(element);
     });
- 
-    msg.map((value,index) => {
 
-
-
-let formatedTime = value.created_at.slice(0,5)
+    msg.map((value, index) => {
+      let formatedTime = value.created_at.slice(0, 5);
 
       list.innerHTML += `<li>
     <div class="ball_msg">
     <div class='info_details'>  
 
         <span class="nickname_ball_msg">user</span>
-        <button id='delete' onclick='delet(${value.id})'>X</button>
+        <button id='delete'alt='Deletar mensagem' onclick='delet(${value.id})'>X</button>
 
         </div>
  
@@ -78,24 +70,14 @@ let formatedTime = value.created_at.slice(0,5)
     </div>
     </li>`;
 
-
-  
-
+    
     });
-
-  
-   
   });
 
-
+ 
+  document.getElementById("list_ul").lastChild.scrollIntoView();
 
 };
-
-
-
-function lastElement() {
-  
-}
 
 _supabase
   .channel("custom-all-channel")
@@ -111,22 +93,20 @@ _supabase
 updateList();
 
 async function send() {
-msg=[]
+  msg = [];
   let valueBoxMenssage = boxmsg.value;
   if (boxmsg.value != "") {
     const { error } = await _supabase
       .from("mensages")
-      .insert({ datamsg: valueBoxMenssage, created_at: getHour(), key_room_message:code });
-      document.getElementById('box_Msg').value = ""
-   
+      .insert({
+        datamsg: valueBoxMenssage,
+        created_at: getHour(),
+        key_room_message: code,
+      });
+    document.getElementById("box_Msg").value = "";
   }
-  
 }
 
 async function delet(index) {
-    const { error } = await _supabase
-    .from("mensages")
-    .delete()
-    .eq('id', index)
- 
+  const { error } = await _supabase.from("mensages").delete().eq("id", index);
 }
