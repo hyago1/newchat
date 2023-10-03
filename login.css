@@ -1,0 +1,32 @@
+body{
+    font-family: 'Inter', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    user-select: none;
+    margin: 0px;
+    background-color: rgb(27 29 30);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 100vh;
+
+
+
+
+}
+input{
+    text-align: center;
+    font-size: 25px;
+    width: auto;
+}
+button, input{
+    color: aliceblue;
+    background-color: rgb(38, 42, 43);
+    width: 15%;
+    height: 4em;
+    margin: 5px;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}

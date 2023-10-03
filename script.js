@@ -9,9 +9,11 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 var msg = [];
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
+var codeInfo = document.getElementById("code");
 var dt = new Date()
 
 //variaveis
+
 
 
 function getHour(){
@@ -21,16 +23,31 @@ function getHour(){
   return  time
 } 
 
-
+let code
+let codeCheck = false
 async function init() {
-  const { data, error } = await _supabase.from("mensages").select();
+
+
+
+  const { data, error } = await _supabase.from("mensages").select().eq('key_room_message',code);
 
   return data;
 }
 
 const updateList = () => {
+  console.log(code);
+  if (!codeCheck) {
+    code = prompt("Digite o código da sala")
+ codeCheck = true
+  }
+  
+
   msg = [];
   list.innerHTML = "";
+
+
+codeInfo.textContent = code
+
   init().then((value) => {
 
     value.forEach((element) => {
@@ -42,13 +59,12 @@ const updateList = () => {
 
 
 let formatedTime = value.created_at.slice(0,5)
-console.log(formatedTime);
-console.log(value.created_at);
+
       list.innerHTML += `<li>
     <div class="ball_msg">
     <div class='info_details'>  
 
-        <span class="nickname_ball_msg">Ze</span>
+        <span class="nickname_ball_msg">user</span>
         <button id='delete' onclick='delet(${value.id})'>X</button>
 
         </div>
@@ -70,6 +86,9 @@ console.log(value.created_at);
   
    
   });
+
+
+
 };
 
 
@@ -97,14 +116,11 @@ msg=[]
   if (boxmsg.value != "") {
     const { error } = await _supabase
       .from("mensages")
-      .insert({ datamsg: valueBoxMenssage, created_at: getHour() });
+      .insert({ datamsg: valueBoxMenssage, created_at: getHour(), key_room_message:code });
       document.getElementById('box_Msg').value = ""
-
-     
+   
   }
   
-
-
 }
 
 async function delet(index) {

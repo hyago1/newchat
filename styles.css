@@ -3,14 +3,14 @@ body{
     font-family: 'Raleway', sans-serif;
     user-select: none;
     margin: 0px;
-    background-color: rgb(36, 36, 36);
+    background-color: rgb(27 29 30);;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 header{
-
+color: aliceblue;
     position: fixed;
 top: 0px;
     width: 100%;
@@ -18,14 +18,14 @@ height: 30px;
 display: flex;
 justify-content: center;
 align-items: center;
-background-color: rgb(44, 44, 44);
+background-color: rgb(38, 43, 44);
 padding: 5px;
 }
 h2{
     margin: 0px;
 }
 .area_Menssage{
-    background-color: rgb(34, 34, 34);
+    background-color: rgb(27 29 30);;
     width: 95%;
     height: 90vh;
     overflow-y: auto;
