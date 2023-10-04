@@ -16,6 +16,10 @@ async function getId() {
   document.execCommand("copy");
 }
 
+
+
+
+
 async function enterRoom() {
    
    const { error } = await _supabase.from("salas").insert({ key_room: code });

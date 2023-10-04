@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Raleway:wght@100&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
-
+<script src="/animate.js"></script>
     <title>Chat</title>
 </head>
 
@@ -20,6 +20,12 @@
         <div class="infoCode">
        <span>code: </span>
         <span id="code"></span>
+        </div>
+
+
+        <div class="login">
+            <button onclick="longinGoogle()" id="login">Login</button>
+            <button onclick="logoutGoogle()" id="logout">Logout</button>
         </div>
 
     </header>
@@ -33,6 +39,9 @@
         <div><input class="msgt" type="text" id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
             <input class="msgt" id="btn" type="button" value=">"  onclick="send()"/></div>
     </div>
+
+
+    <div class="deleteMensseger" ondragover="onDragOver(event)"   ></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js"></script>
     <script src="./script.js" ></script>
