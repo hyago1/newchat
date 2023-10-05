@@ -104,7 +104,7 @@ datamsg = `<a src='${value.datamsg}'></a>`
         </div>
  
         <div class='info' > 
-        <span class="msg">${value.datamsg}</span>
+        <span class="msg">${datamsg}</span>
         <span id='hour'>${formatedTime}</span>
         
         </div>
