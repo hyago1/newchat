@@ -15,13 +15,12 @@ var dt = new Date();
 //variaveis
 
 function openMenu() {
-  document.getElementById('option').style.display = "flex"
-  document.getElementById('option').style.transform = "transform: scaleZ(1.4);"
+  document.getElementById("option").style.display = "flex";
+  document.getElementById("option").style.transform = "transform: scaleZ(1.4);";
 }
 function closeMenu() {
-  document.getElementById('option').style.display = "none"
+  document.getElementById("option").style.display = "none";
 }
-
 
 function longinGoogle() {
   _supabase.auth.signInWithOAuth({
@@ -47,34 +46,31 @@ async function init() {
   return data;
 }
 
+if (!codeCheck) {
+  code = prompt("Digite o código da sala");
+  codeCheck = true;
+  codeInfo.textContent = code;
+}
+
 const updateList = () => {
-
-  if (!codeCheck) {
-    code = prompt("Digite o código da sala");
-    codeCheck = true;
-  }
-
   msg = [];
   list.innerHTML = "";
 
-  codeInfo.textContent = code;
-
   init().then(async (value) => {
-    let avatar = document.getElementById("avatar")
+    let avatar = document.getElementById("avatar");
     const { data, error } = await _supabase.auth.getSession();
     console.log(data.session);
     let verificated;
     if (data.session.user.aud == "authenticated") {
       verificated = true;
-
       document.getElementById("login").style.display = "none";
-     avatar.style.display = "block"
-     avatar.innerHTML =`<img onclick="openMenu()" src='${data.session.user.user_metadata.avatar_url}'></img>`
-      
+      avatar.style.display = "block";
+      avatar.innerHTML = `<img onclick="openMenu()" src='${data.session.user.user_metadata.avatar_url}'></img>`;
+
       document.getElementById("logout").style.display = "block";
     } else {
       document.getElementById("login").style.display = "block";
-      document.getElementById("avatar").style.display = "none"
+      document.getElementById("avatar").style.display = "none";
       document.getElementById("logout").style.display = "none";
     }
 
@@ -82,16 +78,17 @@ const updateList = () => {
       msg.push(element);
     });
 
-
-
     msg.map((value, index) => {
       let formatedTime = value.created_at.slice(0, 5);
-      let datamsg = value.datamsg
-   
-      if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://") || value.datamsg.startsWith("www.")) {
-        datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`
-        }
+      let datamsg = value.datamsg;
 
+      if (
+        value.datamsg.startsWith("http://") ||
+        value.datamsg.startsWith("https://") ||
+        value.datamsg.startsWith("www.")
+      ) {
+        datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
+      }
 
       list.innerHTML += `<li>
     <div class="ball_msg">
@@ -118,21 +115,10 @@ const updateList = () => {
 function logoutGoogle() {
   _supabase.auth.signOut();
 
-  setTimeout(()=>{
-    window.location.href = "/index.html"
+  setTimeout(() => {
+    window.location.href = "/index.html";
   }, 5000);
 }
-
-const channel = _supabase.channel('any')
-channel
-  .on('presence', { event: 'join' }, () => {
-    console.log('Synced presence state: ', channel.presenceState())
-  })
-  .subscribe(async (status) => {
-    if (status === 'SUBSCRIBED') {
-      await channel.track({ online_at: new Date().toISOString() })
-    }
-  })
 
 _supabase
   .channel("custom-all-channel")
@@ -140,18 +126,21 @@ _supabase
     "postgres_changes",
     { event: "INSERT", schema: "public", table: "mensages" },
     (payload) => {
-       
-        init().then((value) => {
-          value.forEach((element) => {
-            msg.push(element);
-          });
-          let datamsg = payload.new.datamsg
+      init().then((value) => {
+        value.forEach((element) => {
+          msg.push(element);
+        });
+        let datamsg = payload.new.datamsg;
 
-          if (payload.new.datamsg.startsWith("http://") || payload.new.datamsg.startsWith("https://") || payload.new.datamsg.startsWith("www.")) {
-datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
-}
-          let formatedTime = payload.new.created_at.slice(0, 5);
-          list.innerHTML += `<li >
+        if (
+          payload.new.datamsg.startsWith("http://") ||
+          payload.new.datamsg.startsWith("https://") ||
+          payload.new.datamsg.startsWith("www.")
+        ) {
+          datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`;
+        }
+        let formatedTime = payload.new.created_at.slice(0, 5);
+        list.innerHTML += `<li >
         <div id='${payload.new.id}' class="ball_msg">
         <div class='info_details'>  
  
@@ -169,18 +158,12 @@ datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
         
      </div>
      </li>`;
-        });
+      });
 
-        document.getElementById("list_ul").lastChild.scrollIntoView();
-   
+      document.getElementById("list_ul").lastChild.scrollIntoView();
     }
   )
   .subscribe();
-
-updateList();
-
-const channels = _supabase.getChannels()
-console.log(channels);
 
 async function send() {
   msg = [];
@@ -189,14 +172,12 @@ async function send() {
   let valueBoxMenssage = boxmsg.value;
 
   if (boxmsg.value != "") {
-    const { error } = await _supabase
-      .from("mensages")
-      .insert({
-        datamsg: valueBoxMenssage,
-        created_at: getHour(),
-        key_room_message: code,
-        nickname: data.session.user.email,
-      });
+    const { error } = await _supabase.from("mensages").insert({
+      datamsg: valueBoxMenssage,
+      created_at: getHour(),
+      key_room_message: code,
+      nickname: data.session.user.email,
+    });
     document.getElementById("box_Msg").value = "";
   }
 }
@@ -204,7 +185,5 @@ async function send() {
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
 
-
-
-  updateList()
+  updateList();
 }

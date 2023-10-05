@@ -2,63 +2,92 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Raleway:wght@100&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Raleway:wght@100&display=swap"
+    rel="stylesheet">
 
-    <link rel="stylesheet" href="styles.css">
-<script src="/animate.js"></script>
-    <title>Chat</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="/animate.js"></script>
+  <title>Chat</title>
 </head>
 
-<body onblur="updateList()">
-    <header>
-      <h2>chat</h2>
+<body onblur='{
+updateList()
+}'>
+  <header>
+    <h2>chat</h2>
 
-        <div class="infoCode">
-       <span>code: </span>
-        <span id="code"></span>
-        </div>
-
-
-        <div class="login">
-               <div id="avatar" ></div>
-            <div id="option">
- <button onclick="logoutGoogle()" id="logout">Sair</button>
-            </div>
-               
-                
-          
-          
-            <button onclick="longinGoogle()" id="login">Login</button>
-           
-        </div>
-
-    </header>
-
-    <div id="area_Menssage" onclick="closeMenu()" class="area_Menssage">
-        <ul id="list_ul">
-            
-        </ul>
-    </div>
-    <div class="group_msgt">
-        <div><input class="msgt" type="text" id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
-            <input class="msgt" id="btn" type="button" value=">"  onclick="send()"/></div>
+    <div class="infoCode">
+      <span>code: </span>
+      <span id="code"></span>
     </div>
 
 
-    <div class="deleteMensseger" ondragover="onDragOver(event)"   ></div>
+    <div class="login">
+      <div id="avatar"></div>
+      <div id="option">
+        <button onclick="logoutGoogle()" id="logout">Sair</button>
+      </div>
 
-    <script src="https://unpkg.com/@supabase/supabase-js"></script>
-    <script src="./script.js" ></script>
-  <script>
-  
-  
-  
-  </script>
 
+
+
+      <button onclick="longinGoogle()" id="login">Login</button>
+
+    </div>
+
+  </header>
+
+  <div id="area_Menssage" onclick="closeMenu()" class="area_Menssage">
+    <ul id="list_ul">
+
+    </ul>
+  </div>
+  <div class="group_msgt">
+    <div><input class="msgt" type="text" id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
+
+      <input class="msgt" id="btn" type="button" value=">" onclick="send()" />
+    </div>
+  </div>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="./script.js"></script>
+  <!-- <script>
+        const { createClient } = supabase;
+window.HTMLElement.prototype.scrollIntoView = function () {};
+// Create a single supabase client for interacting with your database
+const key =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3NoZmR2d29jZnR6cXV0aHN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTU4MzUwNDAsImV4cCI6MjAxMTQxMTA0MH0.rTKp9LT3w46TM7BiMXV4a-BO553h9uy5bfk8prWYyQ8";
+const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
+    let fileList;
+        
+            const fileSelector = document.getElementById('input');
+  fileSelector.addEventListener('change', (event) => {
+    fileList = event.target.files[0];
+   
+  });
+ async function a() { 
+    console.log(fileList);
+
+   
+const { data, error } = await _supabase
+  .storage
+  .from('img')
+  .upload('/'+fileList.name, fileList, {
+    cacheControl: '3600',
+    upsert: false
+  })
+  console.log();
+
+        }
+
+
+
+        
+       
+    </script> -->
 </body>
 
 </html>
