@@ -88,9 +88,7 @@ const updateList = () => {
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg
       console.log(value);
-if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://")) {
-datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`
-}
+
 
 
       list.innerHTML += `<li>
@@ -137,7 +135,11 @@ _supabase
           value.forEach((element) => {
             msg.push(element);
           });
+          let datamsg = payload.new.datamsg
 
+          if (payload.new.datamsg.startsWith("http://") || payload.new.datamsg.startsWith("https://") || payload.new.datamsg.startsWith("www.")) {
+datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
+}
           let formatedTime = payload.new.created_at.slice(0, 5);
           list.innerHTML += `<li >
         <div id='${payload.new.id}' class="ball_msg">
@@ -150,7 +152,7 @@ _supabase
          </div>
   
          <div class='info' > 
-         <span class="msg">${payload.new.datamsg}</span>
+         <span class="msg">${datamsg}</span>
          <span id='hour'>${formatedTime}</span>
          
          </div>
