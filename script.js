@@ -127,11 +127,8 @@ _supabase
   .channel("custom-all-channel")
   .on(
     "postgres_changes",
-    { event: "*", schema: "public", table: "mensages" },
+    { event: "INSERT", schema: "public", table: "mensages" },
     (payload) => {
-
-
-      if (payload.eventType == "INSERT") {
        
         init().then((value) => {
           value.forEach((element) => {
@@ -164,20 +161,11 @@ datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
         });
 
         document.getElementById("list_ul").lastChild.scrollIntoView();
-      }
-      if (payload.eventType == "DELETE") {
-        updateList();
-      }
+   
     }
   )
-  .subscribe((status) => {
-    if (status === 'SUBSCRIBED') {
-      channel.send({
-        type: 'broadcast',
-        event: 'cursor-pos',
-        payload: { x: Math.random(), y: Math.random() },
-      })
-    }})
+  .subscribe();
+
 updateList();
 
 const channels = _supabase.getChannels()
@@ -204,4 +192,8 @@ async function send() {
 
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
+
+
+
+  updateList()
 }
