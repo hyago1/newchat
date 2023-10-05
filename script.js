@@ -170,12 +170,18 @@ datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
       }
     }
   )
-  .subscribe();
-
+  .subscribe((status) => {
+    if (status === 'SUBSCRIBED') {
+      channel.send({
+        type: 'broadcast',
+        event: 'cursor-pos',
+        payload: { x: Math.random(), y: Math.random() },
+      })
+    }})
 updateList();
 
 const channels = _supabase.getChannels()
-console.log("channels: "+channels);
+console.log(channels);
 
 async function send() {
   msg = [];
