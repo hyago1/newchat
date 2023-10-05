@@ -88,7 +88,9 @@ const updateList = () => {
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg
       console.log(value);
-
+      if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://") || value.datamsg.startsWith("www.")) {
+        datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`
+        }
 
 
       list.innerHTML += `<li>
