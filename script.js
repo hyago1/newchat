@@ -89,7 +89,7 @@ const updateList = () => {
       let datamsg = value.datamsg
       console.log(value);
 if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://")) {
-datamsg = `<a src='${value.datamsg}'></a>`
+datamsg = `<a src='${value.datamsg}'>${value.datamsg}</a>`
 }
 
 
