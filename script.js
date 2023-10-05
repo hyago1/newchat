@@ -86,9 +86,10 @@ const updateList = () => {
 
     msg.map((value, index) => {
       let formatedTime = value.created_at.slice(0, 5);
+      let datamsg = value.datamsg
       console.log(value);
 if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://")) {
-  console.log("link");
+datamsg = `<a src='${value.datamsg}'></a>`
 }
 
 
