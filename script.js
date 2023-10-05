@@ -14,22 +14,20 @@ var dt = new Date();
 
 //variaveis
 
-
-
-
-
-
-
-function longinGoogle() {
-    
-  _supabase.auth.signInWithOAuth({
-    provider: 'google'
-   
-  })
-   
+function openMenu() {
+  document.getElementById('option').style.display = "flex"
+  document.getElementById('option').style.transform = "transform: scaleZ(1.4);"
+}
+function closeMenu() {
+  document.getElementById('option').style.display = "none"
 }
 
 
+function longinGoogle() {
+  _supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+}
 
 function getHour() {
   let hour = dt.getHours();
@@ -37,7 +35,6 @@ function getHour() {
   let time = hour + ":" + minutes;
   return time;
 }
-
 
 let code;
 let codeCheck = false;
@@ -63,20 +60,22 @@ const updateList = () => {
   codeInfo.textContent = code;
 
   init().then(async (value) => {
-
-
-    const { data, error } = await _supabase.auth.getSession()
+    let avatar = document.getElementById("avatar")
+    const { data, error } = await _supabase.auth.getSession();
     console.log(data.session);
     let verificated;
-    if (data.session.user.aud == 'authenticated') {
-      verificated = true
-  
-      document.getElementById("login").style.display = 'none';
-      document.getElementById("logout").style.display = 'block';
-    }else{
- 
-      document.getElementById("login").style.display = 'block';
-      document.getElementById("logout").style.display = 'none';
+    if (data.session.user.aud == "authenticated") {
+      verificated = true;
+
+      document.getElementById("login").style.display = "none";
+     avatar.style.display = "block"
+     avatar.innerHTML =`<img onclick="openMenu()" src='${data.session.user.user_metadata.avatar_url}'></img>`
+      
+      document.getElementById("logout").style.display = "block";
+    } else {
+      document.getElementById("login").style.display = "block";
+      document.getElementById("avatar").style.display = "none"
+      document.getElementById("logout").style.display = "none";
     }
 
     value.forEach((element) => {
@@ -104,24 +103,17 @@ const updateList = () => {
        
     </div>
     </li>`;
-
-    
     });
   });
-
- 
-
 };
 
 function logoutGoogle() {
   _supabase.auth.signOut();
 
-setTimeout(  window.location.href = "/index.html",2000)
-
-
+  setTimeout(()=>{
+    window.location.href = "/index.html"
+  }, 5000);
 }
-
-
 
 _supabase
   .channel("custom-all-channel")
@@ -131,13 +123,12 @@ _supabase
     (payload) => {
       console.log(payload);
 
-        if (payload.eventType == "INSERT") {
-
-          console.log(payload);
-          init().then((value) => {
-            value.forEach((element) => {
-              msg.push(element);
-            });
+      if (payload.eventType == "INSERT") {
+        console.log(payload);
+        init().then((value) => {
+          value.forEach((element) => {
+            msg.push(element);
+          });
 
           let formatedTime = payload.new.created_at.slice(0, 5);
           list.innerHTML += `<li >
@@ -158,22 +149,13 @@ _supabase
         
      </div>
      </li>`;
+        });
 
-
-
-    }
-      
-    )
-
-  
-
-    document.getElementById("list_ul").lastChild.scrollIntoView();
-
-        }if (payload.eventType == "DELETE") {
-          updateList()
-        }
-
-      
+        document.getElementById("list_ul").lastChild.scrollIntoView();
+      }
+      if (payload.eventType == "DELETE") {
+        updateList();
+      }
     }
   )
   .subscribe();
@@ -182,21 +164,23 @@ updateList();
 
 async function send() {
   msg = [];
-     
-  const { data, error } = await _supabase.auth.getSession()
+
+  const { data, error } = await _supabase.auth.getSession();
   let valueBoxMenssage = boxmsg.value;
-  
+
   if (boxmsg.value != "") {
     const { error } = await _supabase
       .from("mensages")
-      .insert({ datamsg: valueBoxMenssage, created_at: getHour(), key_room_message: code, nickname:data.session.user.email });
+      .insert({
+        datamsg: valueBoxMenssage,
+        created_at: getHour(),
+        key_room_message: code,
+        nickname: data.session.user.email,
+      });
     document.getElementById("box_Msg").value = "";
   }
 }
 
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
-
-
-
 }

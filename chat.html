@@ -13,7 +13,7 @@
     <title>Chat</title>
 </head>
 
-<body>
+<body >
     <header>
       <h2>chat</h2>
 
@@ -24,13 +24,21 @@
 
 
         <div class="login">
+               <div id="avatar" ></div>
+            <div id="option">
+ <button onclick="logoutGoogle()" id="logout">Sair</button>
+            </div>
+               
+                
+          
+          
             <button onclick="longinGoogle()" id="login">Login</button>
-            <button onclick="logoutGoogle()" id="logout">Logout</button>
+           
         </div>
 
     </header>
 
-    <div id="area_Menssage" class="area_Menssage">
+    <div id="area_Menssage" onclick="closeMenu()" class="area_Menssage">
         <ul id="list_ul">
             
         </ul>
