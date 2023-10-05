@@ -174,6 +174,9 @@ datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`
 
 updateList();
 
+const channels = _supabase.getChannels()
+console.log("channels: "+channels);
+
 async function send() {
   msg = [];
 
