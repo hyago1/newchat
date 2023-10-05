@@ -82,9 +82,16 @@ const updateList = () => {
       msg.push(element);
     });
 
+
+
     msg.map((value, index) => {
       let formatedTime = value.created_at.slice(0, 5);
       console.log(value);
+if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://")) {
+  console.log("link");
+}
+
+
       list.innerHTML += `<li>
     <div class="ball_msg">
     <div class='info_details'>  
@@ -121,10 +128,10 @@ _supabase
     "postgres_changes",
     { event: "*", schema: "public", table: "mensages" },
     (payload) => {
-      console.log(payload);
+
 
       if (payload.eventType == "INSERT") {
-        console.log(payload);
+       
         init().then((value) => {
           value.forEach((element) => {
             msg.push(element);

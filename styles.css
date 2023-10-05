@@ -115,10 +115,13 @@ font-family: 'Raleway', sans-serif;
     width: auto;
     word-break: break-all;
 }
-.nickname_ball_msg{
+#nickname_ball_msg{
+
     margin-right: 5px;
     width: 20%;
-    font-weight: bold;
+    font-size: 10px;
+    color: rgb(193, 238, 238);
+      
 }
 
 
