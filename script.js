@@ -48,7 +48,7 @@ async function init() {
 }
 
 const updateList = () => {
-  console.log(code);
+
   if (!codeCheck) {
     code = prompt("Digite o código da sala");
     codeCheck = true;
@@ -87,7 +87,7 @@ const updateList = () => {
     msg.map((value, index) => {
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg
-      console.log(value);
+   
       if (value.datamsg.startsWith("http://") || value.datamsg.startsWith("https://") || value.datamsg.startsWith("www.")) {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`
         }
@@ -122,6 +122,17 @@ function logoutGoogle() {
     window.location.href = "/index.html"
   }, 5000);
 }
+
+const channel = _supabase.channel('any')
+channel
+  .on('presence', { event: 'join' }, () => {
+    console.log('Synced presence state: ', channel.presenceState())
+  })
+  .subscribe(async (status) => {
+    if (status === 'SUBSCRIBED') {
+      await channel.track({ online_at: new Date().toISOString() })
+    }
+  })
 
 _supabase
   .channel("custom-all-channel")
