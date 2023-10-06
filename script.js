@@ -192,29 +192,12 @@ _supabase
      </div>
      </li>`;
 
-
-
-
-     if (payload.new.nickname != data.session.user.email ) {
-      if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
-        await Notification.requestPermission()
-      }
-   
-         new Notification('Menssagem Nova!',{
-        body: payload.new.datamsg,
-      });
-      
-     
-     }
-
      const e = document.getElementById("area_Menssage")
      const last = document.getElementById(payload.new.id)
-    let valueForScroll
+  
 if (e.scrollTop >= (e.scrollHeight-800)) {
   
   e.scrollTo({ top: e.scrollHeight, behavior: "smooth" });
-}else{
-
 }
 
     
@@ -229,6 +212,20 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
         direction: 'alternate'
       }
     );
+
+
+
+    if (payload.new.nickname != data.session.user.email ) {
+      if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
+        await Notification.requestPermission()
+      }
+   
+         new Notification('Menssagem Nova!',{
+        body: payload.new.datamsg,
+      });
+      
+     
+     }
 
       });
     }
