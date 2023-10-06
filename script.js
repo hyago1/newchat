@@ -75,6 +75,9 @@ const updateList = () => {
     value.forEach((element) => {
       msg.push(element);
     });
+    
+    list.innerHTML = "";
+
 
     msg.map((value, index) => {
       console.log(value);
@@ -89,8 +92,6 @@ const updateList = () => {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
       }
 
-
-      list.innerHTML = "";
 
       list.innerHTML += `<li>
     <div class="ball_msg">
