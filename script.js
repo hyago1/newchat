@@ -90,6 +90,9 @@ const updateList = () => {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
       }
 
+
+
+
       list.innerHTML += `<li>
     <div class="ball_msg">
     <div class='info_details'>  
@@ -110,8 +113,29 @@ const updateList = () => {
     </li>`;
     });
   });
+  list.animate(
+    [
+      { transform: 'scale(3)' },
+      { transform: 'scale(2)' },
+      { transform: 'scale(1)' }
+    ],
+    {
+      duration: 470,
+      direction: 'alternate'
+    }
+  );
+  
 };
 
+document.addEventListener("visibilitychange", function() {
+ if (document.visibilityState == 'visible') {
+  setTimeout(() => {
+    updateList()
+  }, 1000);
+
+ } 
+  // Modify behavior...
+});
 
 updateList()
 function logoutGoogle() {
@@ -170,9 +194,30 @@ _supabase
         
      </div>
      </li>`;
-      });
+     const e = document.getElementById("area_Menssage")
+     const last = document.getElementById(payload.new.id)
+    let valueForScroll
+if (e.scrollTop >= (e.scrollHeight-800)) {
+  
+  e.scrollTo({ top: e.scrollHeight, behavior: "smooth" });
+}else{
 
-      document.getElementById("list_ul").lastChild.scrollIntoView();
+}
+
+    
+    last.animate(
+      [
+        { transform: 'scale(3)' },
+        { transform: 'scale(2)' },
+        { transform: 'scale(1)' }
+      ],
+      {
+        duration: 200,
+        direction: 'alternate'
+      }
+    );
+
+      });
     }
   )
   .subscribe();
