@@ -187,7 +187,7 @@ if (payload.new.key_room_message == code) {
         <div id='${payload.new.id}' class="ball_msg">
         <div class='info_details'>  
  
-        <span id="nickname_ball_msg">${payload.new.email}</span>
+        <span id="nickname_ball_msg">${payload.new.nickname}</span>
 
          <button id='delete'alt='Deletar mensagem' onclick='delet(${payload.new.id})'>X</button>
  
