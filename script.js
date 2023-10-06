@@ -79,6 +79,7 @@ const updateList = () => {
     });
 
     msg.map((value, index) => {
+      console.log(value);
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg;
 
@@ -97,7 +98,7 @@ const updateList = () => {
     <div class="ball_msg">
     <div class='info_details'>  
 
-    <span id="nickname_ball_msg">${value.nickname}</span>
+    <span id="nickname_ball_msg">${data.session.user.user_metadata.name}</span>
 
         <button id='delete'alt='Deletar mensagem' onclick='delet(${value.id})'>X</button>
 
@@ -160,8 +161,14 @@ _supabase
 
 
       init().then(async (value) => {
+
+
         value.forEach((element) => {
           msg.push(element);
+
+
+          console.log(value);
+
         });
         let datamsg = payload.new.datamsg;
 
