@@ -156,17 +156,10 @@ _supabase
 
            
    const { data, error } = await _supabase.auth.getSession();
-   if (payload.new.nickname != data.session.user.email ) {
-    if (Notification.permission !== 'denied' ) {
-      await Notification.requestPermission()
-    }
-    new Notification('Menssagem Nova!',{
-      body: payload.new.datamsg,
-    });
-   }
 
 
-      init().then((value) => {
+
+      init().then(async (value) => {
         value.forEach((element) => {
           msg.push(element);
         });
@@ -198,6 +191,22 @@ _supabase
         
      </div>
      </li>`;
+
+
+
+
+     if (payload.new.nickname != data.session.user.email ) {
+      if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
+        await Notification.requestPermission()
+      }
+   
+         new Notification('Menssagem Nova!',{
+        body: payload.new.datamsg,
+      });
+      
+     
+     }
+
      const e = document.getElementById("area_Menssage")
      const last = document.getElementById(payload.new.id)
     let valueForScroll
