@@ -53,8 +53,7 @@ if (!codeCheck) {
 }
 
 const updateList = () => {
-  msg = [];
-  list.innerHTML = "";
+
 
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
@@ -74,6 +73,10 @@ const updateList = () => {
       document.getElementById("logout").style.display = "none";
     }
 
+
+    msg = [];
+
+
     value.forEach((element) => {
       msg.push(element);
     });
@@ -92,7 +95,7 @@ const updateList = () => {
       }
 
 
-
+      list.innerHTML = "";
 
       list.innerHTML += `<li>
     <div class="ball_msg">
@@ -134,7 +137,7 @@ document.addEventListener("visibilitychange", function() {
  if (document.visibilityState == 'visible' || document.visibilityState == 'hidden'  ) {
   setTimeout(() => {
     updateList()
-  }, 2000);
+  }, 3000);
 
  } 
   // Modify behavior...
@@ -152,7 +155,7 @@ _supabase
   .channel("custom-all-channel")
   .on(
     "postgres_changes",
-    { event: "*", schema: "public", table: "mensages" },
+    { event: "INSERT", schema: "public", table: "mensages" },
     async (payload) => {
 
            
@@ -160,19 +163,17 @@ _supabase
       console.log(payload);
 
 
-      init().then(async (value) => {
+      // init().then(async (value) => {
 
 
+      // });
 
+       
+          msg.push(payload.new);
 
-        value.forEach((element) => {
-          msg.push(element);
-
-
-          console.log(value);
-
-        });
-        let datamsg = payload.new.datamsg;
+if (payload.new.key_room_message == code) {
+  
+      let datamsg = payload.new.datamsg;
 
         if (
           payload.new.datamsg.startsWith("http://") ||
@@ -236,7 +237,16 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
      
      }
 
-      });
+
+}
+
+
+
+
+
+  
+
+      
     }
   )
   .subscribe();
