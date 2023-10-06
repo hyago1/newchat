@@ -125,7 +125,17 @@ _supabase
   .on(
     "postgres_changes",
     { event: "INSERT", schema: "public", table: "mensages" },
-    (payload) => {
+    async (payload) => {
+
+           
+   const { data, error } = await _supabase.auth.getSession();
+   if (payload.new.nickname != data.session.user.email ) {
+    new Notification('Menssagem Nova!',{
+      body: payload.new.datamsg,
+    });
+   }
+
+
       init().then((value) => {
         value.forEach((element) => {
           msg.push(element);
