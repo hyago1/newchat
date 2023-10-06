@@ -46,13 +46,10 @@ async function init() {
   return data;
 }
 
-if (!codeCheck) {
-  code = prompt("Digite o código da sala");
-  codeCheck = true;
-  codeInfo.textContent = code;
-}
 
 const updateList = () => {
+
+    msg = [];
 
 
   init().then(async (value) => {
@@ -73,8 +70,6 @@ const updateList = () => {
       document.getElementById("logout").style.display = "none";
     }
 
-
-    msg = [];
 
 
     value.forEach((element) => {
@@ -251,9 +246,16 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
   )
   .subscribe();
 
+  if (!codeCheck) {
+    code = prompt("Digite o código da sala");
+    codeCheck = true;
+    codeInfo.textContent = code;
+    updateList()
+  }
+  
 
 
-  updateList()
+
 
 async function send() {
 
