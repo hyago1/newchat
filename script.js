@@ -127,17 +127,18 @@ const updateList = () => {
   
 };
 
+
+
 document.addEventListener("visibilitychange", function() {
- if (document.visibilityState == 'visible') {
+ if (document.visibilityState == 'visible' || document.visibilityState == 'hidden'  ) {
   setTimeout(() => {
     updateList()
-  }, 1000);
+  }, 2000);
 
  } 
   // Modify behavior...
 });
 
-updateList()
 function logoutGoogle() {
   _supabase.auth.signOut();
 
@@ -150,12 +151,15 @@ _supabase
   .channel("custom-all-channel")
   .on(
     "postgres_changes",
-    { event: "INSERT", schema: "public", table: "mensages" },
+    { event: "*", schema: "public", table: "mensages" },
     async (payload) => {
 
            
    const { data, error } = await _supabase.auth.getSession();
    if (payload.new.nickname != data.session.user.email ) {
+    if (Notification.permission !== 'denied' ) {
+      await Notification.requestPermission()
+    }
     new Notification('Menssagem Nova!',{
       body: payload.new.datamsg,
     });
@@ -222,8 +226,11 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
   )
   .subscribe();
 
+
+
+  updateList()
+
 async function send() {
-  msg = [];
 
   const { data, error } = await _supabase.auth.getSession();
   let valueBoxMenssage = boxmsg.value;
