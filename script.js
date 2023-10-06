@@ -112,12 +112,14 @@ const updateList = () => {
   });
 };
 
+
+updateList()
 function logoutGoogle() {
   _supabase.auth.signOut();
 
   setTimeout(() => {
     window.location.href = "/index.html";
-  }, 5000);
+  }, 2000);
 }
 
 _supabase
