@@ -2,7 +2,7 @@
   "background_color": "#ffffff",
   "description": "chatCode",
   "dir": "ltr",
-  "display": "standalone",
+  "display":"fullscreen",
   "name": "chatCode",
   "orientation": "any",
   "scope": "/",
