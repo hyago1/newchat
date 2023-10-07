@@ -231,7 +231,7 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
       navigator.serviceWorker.ready.then( reg => { reg.showNotification("chatCode",{
         title:payload.new.nickname,
         body: payload.new.datamsg,
-        icon:"/android-launchericon-512-512.png"
+        icon:"/android-launchericon-192-192.png"
 
       })});
       
