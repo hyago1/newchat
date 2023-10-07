@@ -144,7 +144,7 @@ function logoutGoogle() {
 
   setTimeout(() => {
     window.location.href = "/index.html";
-  }, 1500);
+  }, 1360);
 }
 
 _supabase
