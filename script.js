@@ -222,13 +222,18 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
 
 
     if (payload.new.nickname != data.session.user.email ) {
+      navigator.serviceWorker.register('sw.js');
       if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
         await Notification.requestPermission()
       }
-   
-         new Notification('Menssagem Nova!',{
+
+
+      navigator.serviceWorker.ready.then( reg => { reg.showNotification("your arguments goes here",{
         body: payload.new.datamsg,
-      });
+
+      })});
+      
+
       
      
      }
