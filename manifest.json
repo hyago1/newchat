@@ -1,18 +1,17 @@
 {
   "background_color": "#ffffff",
-  "description": "",
+  "description": "chatCode",
   "dir": "ltr",
   "display": "standalone",
-  "name": "chathyago.vercel",
+  "name": "chatCode",
   "orientation": "any",
   "scope": "/",
-  "short_name": "chathyago.vercel",
+  "short_name": "chatCode",
   "start_url": "/",
   "theme_color": "#ffffff",
   "categories": [
     "entertainment",
-    "productivity",
-    "utilities"
+    "productivity"
   ],
   "screenshots": [
     {
@@ -26,7 +25,10 @@
       "type": "image/png"
     }
   ],
-  "icons": [],
+  "icons": [{
+    "src":"/android-launchericon-512-512",
+    "sizes": "512x512"
+  }],
   "shortcuts": [
     {
       "name": "politica de privacidade",
