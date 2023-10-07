@@ -222,21 +222,23 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
 
 
     if (payload.new.nickname != data.session.user.email ) {
+
+
+
       navigator.serviceWorker.register('sw.js');
       if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
         await Notification.requestPermission()
       }
+if (document.visibilityState == 'hidden' ) {
+  navigator.serviceWorker.ready.then( reg => { reg.showNotification("chatCode",{
+    title:payload.new.nickname,
+    body: payload.new.datamsg,
+    icon:"/android-launchericon-192-192.png"
 
+  })});
+}
 
-      navigator.serviceWorker.ready.then( reg => { reg.showNotification("chatCode",{
-        title:payload.new.nickname,
-        body: payload.new.datamsg,
-        icon:"/android-launchericon-192-192.png"
-
-      })});
-      
-
-      
+   
      
      }
 
