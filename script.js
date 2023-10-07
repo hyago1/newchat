@@ -228,7 +228,8 @@ if (e.scrollTop >= (e.scrollHeight-800)) {
       }
 
 
-      navigator.serviceWorker.ready.then( reg => { reg.showNotification("your arguments goes here",{
+      navigator.serviceWorker.ready.then( reg => { reg.showNotification("chatCode",{
+        title:payload.new.nickname,
         body: payload.new.datamsg,
 
       })});
