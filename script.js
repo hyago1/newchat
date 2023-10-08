@@ -22,10 +22,14 @@ function closeMenu() {
   document.getElementById("option").style.display = "none";
 }
 
-function longinGoogle() {
+async function longinGoogle() {
   _supabase.auth.signInWithOAuth({
     provider: "google",
   });
+
+
+
+
 }
 
 function getHour() {
@@ -52,9 +56,15 @@ const updateList = () => {
     msg = [];
 
 
+
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
-    const { data, error } = await _supabase.auth.getSession();
+    const { data } = await _supabase.auth.getSession();
+    const { error } = await _supabase.from("mensages").insert({
+      email: data.session.user.identities.identity_data.email,
+      name: data.session.user.identities.identity_data.name,
+    
+    });
     console.log(data.session);
     let verificated;
     if (data.session.user.aud == "authenticated") {
