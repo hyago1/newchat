@@ -116,7 +116,7 @@ const updatePage = async () => {
   const { data } = await _supabase.auth.getSession();
 
 getUsers().then(async (users)=>{
-  let confirmation = false;
+  let confirmation;
 
   if (users == undefined) {
     console.log(users);
@@ -131,11 +131,14 @@ getUsers().then(async (users)=>{
       if (value.email == data.session.user.user_metadata.email) {
         confirmation = true;
       }
+      else{
+        confirmation = false
+      }
     });
   }
   
   if (!confirmation) {
-  console.log("dewde");
+  
     const { error } = await _supabase.from("users").insert({
       email: data.session.user.user_metadata.email,
       name: data.session.user.user_metadata.name,
