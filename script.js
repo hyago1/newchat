@@ -13,6 +13,7 @@ var list = document.getElementById("list_ul");
 var listUsers = document.getElementById("list_users");
 var codeInfo = document.getElementById("code");
 var dt = new Date();
+let code;
 
 //variaveis
 
@@ -43,7 +44,7 @@ function openChat() {
     usersList.map((value,index)=>{
 
       listUsers.innerHTML += `<li>
-      <div id="" onclick="closeChat()" class="userContact">
+      <div id="" onclick="closeChat(${value.id})" class="userContact">
         <span>Nome: ${value.name}</span><br>
         <span>Email: ${value.email}</span><br>
         <span>Code: ${value.id}</span>
@@ -61,11 +62,24 @@ function openChat() {
   document.getElementById('menuContactMenssages').style.left = "0px"
   document.getElementById('menuContactMenssages').style.transition = "0.4s"
 }
-function closeChat() {
+async function closeChat(value) {
+  const { data } = await _supabase.auth.getSession();
+let mycode
+let { data: users  } = await _supabase
+.from("users")
+.select("id").eq("email" ,data.session.user.email );
+mycode = users[0].id
+ code = value+mycode
+
+  const { error } = await _supabase.from("salas").insert({ key_room: code });
+
+
+
 
   document.getElementById('menuContactMenssages').style.width = "0%"
   document.getElementById('menuContactMenssages').style.left = "-1000px"
   document.getElementById('menuContactMenssages').style.transition = "0.4s"
+  updatePage()
 }
 
 
@@ -97,9 +111,18 @@ function getHour() {
   return time;
 }
 
-let code;
+
 let codeCheck = false;
+
+
+
+async function enterRoom() {
+  const { error } = await _supabase.from("salas").insert({ key_room: code });
+
+}
+
 async function init() {
+  console.log(code);
   const { data, error } = await _supabase
     .from("mensages")
     .select()

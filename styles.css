@@ -285,7 +285,7 @@ margin-right: 10px;
     cursor: pointer;
     color: white;
 }
-#logout{
+#logout, #codeCode{
     background-color: transparent;
     font-family: 'Raleway', sans-serif;
     font-size: 18px;
