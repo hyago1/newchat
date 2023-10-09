@@ -8,12 +8,15 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 //variaveis
 var msg = [];
 var usersList = []
+
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
 var listUsers = document.getElementById("list_users");
+var lisMyContacts = document.getElementById("list_myContact");
 var codeInfo = document.getElementById("code");
 var dt = new Date();
 let code;
+let mycode
 
 //variaveis
 
@@ -29,8 +32,49 @@ async function getUsers(params) {
   .select("*");
   return users
 }
+async function getContact(params) {
+  let { data: users, error } = await _supabase
+  .from("contacts")
+  .select("*");
+  return users
+}
+
+async function addMyContacts(idValue) {
 
 
+    lisMyContacts.innerHTML = ""
+   console.log(idValue);
+    const { err } = await _supabase.from("contacts").insert({
+     owner:mycode,
+     contact: idValue,
+    });
+
+
+
+
+
+    // getContact().then((value)=>{
+   
+    //    usersListMyContents.map((value,index)=>{
+
+    //   lisMyContacts.innerHTML += `<li>
+    //   <div id="" onclick="closeChat(${value.id})" class="userContact">
+    //         <div class='userContactInfo'>
+    //   <span>Nome: ${value.name}</span><br>
+    //     <span>Email: ${value.email}</span><br>
+    //     <span>Code: ${value.id}</span>
+    //   </div>
+    //   <div class='add' onclick='addMyContacts()' title="Adcionar como contato">+</div>
+        
+    //   </div>
+    // </li>`
+    // })
+    // })
+   
+
+  
+
+}
 
 
 function openChat() {
@@ -45,13 +89,17 @@ function openChat() {
 
       listUsers.innerHTML += `<li>
       <div id="" onclick="closeChat(${value.id})" class="userContact">
-        <span>Nome: ${value.name}</span><br>
+            <div class='userContactInfo'>
+            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img><br>
+      <span>Nome: ${value.name}</span><br>
         <span>Email: ${value.email}</span><br>
         <span>Code: ${value.id}</span>
       </div>
+      <div class='add' onclick='addMyContacts(${value.id})' title="Adcionar como contato">+</div>
+        
+      </div>
     </li>`
     })
-    console.log(value);
 
 
     
@@ -64,7 +112,7 @@ function openChat() {
 }
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
-let mycode
+
 let { data: users  } = await _supabase
 .from("users")
 .select("id").eq("email" ,data.session.user.email );
@@ -74,6 +122,14 @@ mycode = users[0].id
   const { error } = await _supabase.from("salas").insert({ key_room: code });
 
 
+
+
+  document.getElementById('menuContactMenssages').style.width = "0%"
+  document.getElementById('menuContactMenssages').style.left = "-1000px"
+  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+  updatePage()
+}
+async function closePainelChats(value) {
 
 
   document.getElementById('menuContactMenssages').style.width = "0%"
@@ -102,6 +158,47 @@ async function longinGoogle() {
   _supabase.auth.signInWithOAuth({
     provider: "google",
   });
+
+
+
+
+  const { data } = await _supabase.auth.getSession();
+
+getUsers().then(async (users)=>{
+  let confirmation;
+
+  if (users == undefined) {
+
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+    });
+  } else {    
+
+    users.forEach((value) => {
+  
+      if (value.email == data.session.user.user_metadata.email) {
+        confirmation = true;
+      }
+      else{
+        confirmation = false
+      }
+    });
+  }
+  
+  if (!confirmation) {
+  
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+      imgProfile:data.session.user.user_metadata.avatar_url
+    });
+  }
+  
+})
+
+
+
 }
 
 function getHour() {
@@ -122,7 +219,7 @@ async function enterRoom() {
 }
 
 async function init() {
-  console.log(code);
+
   const { data, error } = await _supabase
     .from("mensages")
     .select()
@@ -135,43 +232,13 @@ async function init() {
 
 
 const updatePage = async () => {
+  console.log(code);
   msg = [];
+
+
   const { data } = await _supabase.auth.getSession();
 
-getUsers().then(async (users)=>{
-  let confirmation;
-
-  if (users == undefined) {
-    console.log(users);
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-    });
-  } else {    
-  console.log(users);
-    users.forEach((value) => {
-  
-      if (value.email == data.session.user.user_metadata.email) {
-        confirmation = true;
-      }
-      else{
-        confirmation = false
-      }
-    });
-  }
-  
-  if (!confirmation) {
-  
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-    });
-  }
-  
-})
-
-
-
+if (code != undefined || code != "NaN" || code != null) {
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
   
@@ -201,7 +268,7 @@ getUsers().then(async (users)=>{
     list.innerHTML = "";
 
     msg.map((value, index) => {
-      console.log(value);
+
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg;
 
@@ -233,17 +300,11 @@ getUsers().then(async (users)=>{
     </li>`;
     });
   });
-  list.animate(
-    [
-      { transform: "scale(3)" },
-      { transform: "scale(2)" },
-      { transform: "scale(1)" },
-    ],
-    {
-      duration: 470,
-      direction: "alternate",
-    }
-  );
+}
+
+
+  
+
 };
 
 document.addEventListener("visibilitychange", function () {

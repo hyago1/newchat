@@ -14,9 +14,9 @@
   <title>Chat</title>
 </head>
 
-<body >
+<body id="body" >
 <header class="header">
-  <button id="contact" onclick="openChat()">Contatos</button>
+  <button id="contact" onclick="openChat()" title="Contatos">Contatos</button>
   <h2>chat</h2>
 
   <div class="infoCode">
@@ -44,13 +44,27 @@
 
 <div id="menuContactMenssages">
   
- <h3>chats (Em desenvolvimento...)</h3>
- <button id="close" onclick="closeChat()">X</button>
-<ul id="list_users">
+ <h3 title="Ainda em desenvolvimento">Chats</h3>
+ <button id="close" onclick="closePainelChats()">X</button>
+
+
+ <div>
+  <span style="opacity: 0.5;">My contacts</span> <div class="division"></div>
+ </div>
+ <ul id="list_myContact" class="list_users">
+   
+
+
+ </ul>
+<div>
+  <span>All contacts</span> <div class="division"></div>
+ </div>
+<ul id="list_users" class="list_users">
    
 
 
 </ul>
+
 
 </div>
   <div id="area_Menssage" onclick="closeMenu()" class="area_Menssage">
