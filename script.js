@@ -208,7 +208,7 @@ const updatePage = async () => {
 
   const { data } = await _supabase.auth.getSession();
 
-if(emailAdded){
+
 getUsers().then(async (users)=>{
   let confirmation;
 
@@ -242,7 +242,7 @@ getUsers().then(async (users)=>{
   }
   
 })
-}
+
 
 
 
