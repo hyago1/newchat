@@ -7,14 +7,76 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 
 //variaveis
 var msg = [];
+var usersList = []
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
+var listUsers = document.getElementById("list_users");
 var codeInfo = document.getElementById("code");
 var dt = new Date();
 
 //variaveis
 
+
+
+
+
+
+
+async function getUsers(params) {
+  let { data: users, error } = await _supabase
+  .from("users")
+  .select("*");
+  return users
+}
+
+
+
+
+function openChat() {
+  getUsers().then((value)=>{ 
+    usersList = []
+    listUsers.innerHTML = ""
+    value.forEach((value)=>{
+      usersList.push(value)
+    })
+   
+    usersList.map((value,index)=>{
+
+      listUsers.innerHTML += `<li>
+      <div id="" onclick="closeChat()" class="userContact">
+        <span>Nome: ${value.name}</span><br>
+        <span>Email: ${value.email}</span><br>
+        <span>Code: ${value.id}</span>
+      </div>
+    </li>`
+    })
+    console.log(value);
+
+
+    
+
+})    
+
+  document.getElementById('menuContactMenssages').style.width = "70%"
+  document.getElementById('menuContactMenssages').style.left = "0px"
+  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+}
+function closeChat() {
+
+  document.getElementById('menuContactMenssages').style.width = "0%"
+  document.getElementById('menuContactMenssages').style.left = "-1000px"
+  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+}
+
+
+
+
+
 function openMenu() {
+
+
+
+
   document.getElementById("option").style.display = "flex";
   document.getElementById("option").style.transform = "transform: scaleZ(1.4);";
 }
@@ -45,19 +107,6 @@ async function init() {
 
   return data;
 }
-
-
-
-
-
-
-async function getUsers(params) {
-  let { data: users, error } = await _supabase
-  .from("users")
-  .select("*");
-  return users
-}
-
 
 
 
