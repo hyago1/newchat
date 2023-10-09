@@ -90,8 +90,12 @@ function openChat() {
       listUsers.innerHTML += `<li>
       <div id="" onclick="closeChat(${value.id})" class="userContact">
             <div class='userContactInfo'>
-            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img><br>
-      <span>Nome: ${value.name}</span><br>
+            <div id='nicks'> 
+            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img>
+
+      <span> ${value.name}</span><br>
+            </div>
+           
         <span>Email: ${value.email}</span><br>
         <span>Code: ${value.id}</span>
       </div>
