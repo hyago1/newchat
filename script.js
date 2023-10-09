@@ -8,7 +8,7 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 //variaveis
 var msg = [];
 var usersList = []
-
+var emailAdded = false
 var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
 var listUsers = document.getElementById("list_users");
@@ -166,40 +166,6 @@ async function longinGoogle() {
 
 
 
-  const { data } = await _supabase.auth.getSession();
-
-getUsers().then(async (users)=>{
-  let confirmation;
-
-  if (users == undefined) {
-
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-    });
-  } else {    
-
-    users.forEach((value) => {
-  
-      if (value.email == data.session.user.user_metadata.email) {
-        confirmation = true;
-      }
-      else{
-        confirmation = false
-      }
-    });
-  }
-  
-  if (!confirmation) {
-  
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-      imgProfile:data.session.user.user_metadata.avatar_url
-    });
-  }
-  
-})
 
 
 
@@ -241,6 +207,48 @@ const updatePage = async () => {
 
 
   const { data } = await _supabase.auth.getSession();
+
+if(emailAdded){
+getUsers().then(async (users)=>{
+  let confirmation;
+
+  if (users == undefined) {
+
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+    });
+  } else {    
+
+    users.forEach((value) => {
+  
+      if (value.email == data.session.user.user_metadata.email) {
+        confirmation = true;
+      }
+      else{
+        confirmation = false
+      }
+    });
+  }
+  
+  if (!confirmation) {
+  emailAdded = true
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+      imgProfile:data.session.user.user_metadata.avatar_url
+    });
+    
+  }
+  
+})
+}
+
+
+
+
+
+
 
 if (code != undefined || code != "NaN" || code != null) {
   init().then(async (value) => {
