@@ -46,43 +46,67 @@ async function init() {
   return data;
 }
 
-const updateList = () => {
+
+
+
+
+
+async function getUsers(params) {
+  let { data: users, error } = await _supabase
+  .from("users")
+  .select("*");
+  return users
+}
+
+
+
+
+
+const updatePage = async () => {
   msg = [];
+  const { data } = await _supabase.auth.getSession();
+
+getUsers().then(async (users)=>{
+  let confirmation = false;
+
+  if (users == undefined) {
+    console.log(users);
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+    });
+  } else {    
+  console.log(users);
+    users.forEach((value) => {
+  
+      if (value.email == data.session.user.user_metadata.email) {
+        confirmation = true;
+      }
+    });
+  }
+  
+  if (!confirmation) {
+  console.log("dewde");
+    const { error } = await _supabase.from("users").insert({
+      email: data.session.user.user_metadata.email,
+      name: data.session.user.user_metadata.name,
+    });
+  }
+  
+})
+
+
 
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
-    const { data } = await _supabase.auth.getSession();
+  
 
     console.log(data.session);
     let verificated;
     if (data.session.user.aud == "authenticated") {
       verificated = true;
 
-      let { data: users, error } = await _supabase
-        .from("users")
-        .select("*");
-      let confirmation = false;
-
-      if (users == undefined) {
-        const { error } = await _supabase.from("users").insert({
-          email: data.session.user.user_metadata.email,
-          name: data.session.user.user_metadata.name,
-        });
-      } else {
-        users.forEach((value) => {
-          console.log(value);
-          if (value.email == data.session.user.user_metadata.email) {
-            confirmation = true;
-          }
-        });
-      }
-
-      if (!confirmation) {
-        const { error } = await _supabase.from("users").insert({
-          email: data.session.user.user_metadata.email,
-          name: data.session.user.user_metadata.name,
-        });
-      }
+ 
 
       document.getElementById("login").style.display = "none";
       avatar.style.display = "block";
@@ -153,7 +177,7 @@ document.addEventListener("visibilitychange", function () {
     document.visibilityState == "hidden"
   ) {
     setTimeout(() => {
-      updateList();
+      updatePage();
     }, 3000);
   }
   // Modify behavior...
@@ -258,19 +282,23 @@ if (!codeCheck) {
   code = prompt("Digite o código da sala");
   codeCheck = true;
   codeInfo.textContent = code;
-  updateList();
+  updatePage();
 }
 
 async function send() {
-  const { data, error } = await _supabase.auth.getSession();
+  const { data } = await _supabase.auth.getSession();
   let valueBoxMenssage = boxmsg.value;
-
+let name
+  let { data: users, error } = await _supabase
+  .from("users")
+  .select("name").eq("email" ,data.session.user.email );
+name = users[0].name
   if (boxmsg.value != "") {
     const { error } = await _supabase.from("mensages").insert({
       datamsg: valueBoxMenssage,
       created_at: getHour(),
       key_room_message: code,
-      nickname: data.session.user.email,
+      nickname: name,
     });
     document.getElementById("box_Msg").value = "";
   }
@@ -279,5 +307,5 @@ async function send() {
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
 
-  updateList();
+  updatePage();
 }
