@@ -26,10 +26,6 @@ async function longinGoogle() {
   _supabase.auth.signInWithOAuth({
     provider: "google",
   });
-
-
-
-
 }
 
 function getHour() {
@@ -50,25 +46,44 @@ async function init() {
   return data;
 }
 
-
 const updateList = () => {
-
-    msg = [];
-
-
+  msg = [];
 
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
     const { data } = await _supabase.auth.getSession();
-    const { error } = await _supabase.from("mensages").insert({
-      email: data.session.user.identities.identity_data.email,
-      name: data.session.user.identities.identity_data.name,
-    
-    });
+
     console.log(data.session);
     let verificated;
     if (data.session.user.aud == "authenticated") {
       verificated = true;
+
+      let { data: users, error } = await _supabase
+        .from("users")
+        .select("*");
+      let confirmation = false;
+
+      if (users == undefined) {
+        const { error } = await _supabase.from("users").insert({
+          email: data.session.user.user_metadata.email,
+          name: data.session.user.user_metadata.name,
+        });
+      } else {
+        users.forEach((value) => {
+          console.log(value);
+          if (value.email == data.session.user.user_metadata.email) {
+            confirmation = true;
+          }
+        });
+      }
+
+      if (!confirmation) {
+        const { error } = await _supabase.from("users").insert({
+          email: data.session.user.user_metadata.email,
+          name: data.session.user.user_metadata.name,
+        });
+      }
+
       document.getElementById("login").style.display = "none";
       avatar.style.display = "block";
       avatar.innerHTML = `<img onclick="openMenu()" src='${data.session.user.user_metadata.avatar_url}'></img>`;
@@ -80,14 +95,11 @@ const updateList = () => {
       document.getElementById("logout").style.display = "none";
     }
 
-
-
     value.forEach((element) => {
       msg.push(element);
     });
-    
-    list.innerHTML = "";
 
+    list.innerHTML = "";
 
     msg.map((value, index) => {
       console.log(value);
@@ -101,7 +113,6 @@ const updateList = () => {
       ) {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
       }
-
 
       list.innerHTML += `<li>
     <div class="ball_msg">
@@ -125,27 +136,26 @@ const updateList = () => {
   });
   list.animate(
     [
-      { transform: 'scale(3)' },
-      { transform: 'scale(2)' },
-      { transform: 'scale(1)' }
+      { transform: "scale(3)" },
+      { transform: "scale(2)" },
+      { transform: "scale(1)" },
     ],
     {
       duration: 470,
-      direction: 'alternate'
+      direction: "alternate",
     }
   );
-  
 };
 
-
-
-document.addEventListener("visibilitychange", function() {
- if (document.visibilityState == 'visible' || document.visibilityState == 'hidden'  ) {
-  setTimeout(() => {
-    updateList()
-  }, 3000);
-
- } 
+document.addEventListener("visibilitychange", function () {
+  if (
+    document.visibilityState == "visible" ||
+    document.visibilityState == "hidden"
+  ) {
+    setTimeout(() => {
+      updateList();
+    }, 3000);
+  }
   // Modify behavior...
 });
 
@@ -163,23 +173,17 @@ _supabase
     "postgres_changes",
     { event: "INSERT", schema: "public", table: "mensages" },
     async (payload) => {
-
-           
-   const { data, error } = await _supabase.auth.getSession();
+      const { data, error } = await _supabase.auth.getSession();
       console.log(payload);
-
 
       // init().then(async (value) => {
 
-
       // });
 
-       
-          msg.push(payload.new);
+      msg.push(payload.new);
 
-if (payload.new.key_room_message == code) {
-  
-      let datamsg = payload.new.datamsg;
+      if (payload.new.key_room_message == code) {
+        let datamsg = payload.new.datamsg;
 
         if (
           payload.new.datamsg.startsWith("http://") ||
@@ -208,77 +212,56 @@ if (payload.new.key_room_message == code) {
      </div>
      </li>`;
 
-     const e = document.getElementById("area_Menssage")
-     const last = document.getElementById(payload.new.id)
-  
-if (e.scrollTop >= (e.scrollHeight-800)) {
-  
-  e.scrollTo({ top: e.scrollHeight, behavior: "smooth" });
-}
+        const e = document.getElementById("area_Menssage");
+        const last = document.getElementById(payload.new.id);
 
-    
-    last.animate(
-      [
-        { transform: 'scale(3)' },
-        { transform: 'scale(2)' },
-        { transform: 'scale(1)' }
-      ],
-      {
-        duration: 200,
-        direction: 'alternate'
+        if (e.scrollTop >= e.scrollHeight - 800) {
+          e.scrollTo({ top: e.scrollHeight, behavior: "smooth" });
+        }
+
+        last.animate(
+          [
+            { transform: "scale(3)" },
+            { transform: "scale(2)" },
+            { transform: "scale(1)" },
+          ],
+          {
+            duration: 200,
+            direction: "alternate",
+          }
+        );
+
+        if (payload.new.nickname != data.session.user.email) {
+          navigator.serviceWorker.register("sw.js");
+          if (
+            Notification.permission !== "denied" ||
+            Notification.permission !== "default"
+          ) {
+            await Notification.requestPermission();
+          }
+          if (document.visibilityState == "hidden") {
+            navigator.serviceWorker.ready.then((reg) => {
+              reg.showNotification("chatCode", {
+                title: payload.new.nickname,
+                body: payload.new.datamsg,
+                icon: "/android-launchericon-192-192.png",
+              });
+            });
+          }
+        }
       }
-    );
-
-
-
-    if (payload.new.nickname != data.session.user.email ) {
-
-
-
-      navigator.serviceWorker.register('sw.js');
-      if (Notification.permission !== 'denied' || Notification.permission !== 'default' ) {
-        await Notification.requestPermission()
-      }
-if (document.visibilityState == 'hidden' ) {
-  navigator.serviceWorker.ready.then( reg => { reg.showNotification("chatCode",{
-    title:payload.new.nickname,
-    body: payload.new.datamsg,
-    icon:"/android-launchericon-192-192.png"
-
-  })});
-}
-
-   
-     
-     }
-
-
-}
-
-
-
-
-
-  
-
-      
     }
   )
   .subscribe();
 
-  if (!codeCheck) {
-    code = prompt("Digite o código da sala");
-    codeCheck = true;
-    codeInfo.textContent = code;
-    updateList()
-  }
-  
-
-
-
+if (!codeCheck) {
+  code = prompt("Digite o código da sala");
+  codeCheck = true;
+  codeInfo.textContent = code;
+  updateList();
+}
 
 async function send() {
-
   const { data, error } = await _supabase.auth.getSession();
   let valueBoxMenssage = boxmsg.value;
 
