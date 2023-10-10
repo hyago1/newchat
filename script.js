@@ -163,7 +163,7 @@ list_myContact_Added.map((value)=>{
     <span>Email: ${value.users.email}</span><br>
     <span>Code: ${value.users.id}</span>
   </div>
-
+  <img width="24" height="24" class='favorite' src="https://img.icons8.com/material-sharp/24/000000/hearts.png" alt="hearts"/>
     
   </div>
 </li>`
@@ -172,13 +172,16 @@ list_myContact_Added.map((value)=>{
 
 lisMyContacts.animate(
   [
-    { transform: "scale(0.92)" },
+   
+    { transform: "scale(1)" },
+    { transform: "scale(0.98)" },
+    { transform: "scale(0.96)" },
     { transform: "scale(0.93)" },
-    { transform: "scale(0.94)" },
+    { transform: "scale(0.97)" },
     { transform: "scale(1)" },
   ],
   {
-    duration: 500,
+    duration: 470,
     direction: "alternate",
   }
 );
@@ -236,12 +239,14 @@ function closeMenu() {
 async function longinGoogle() {
   _supabase.auth.signInWithOAuth({
     provider: "google",
-  });
+  }
+  
+  ,
+  { resizeTo: 'http://127.0.0.1:5500/chat.html' });
 
 
 
-
-
+ 
 
 
 }
@@ -512,6 +517,7 @@ name = users[0].name
 function openListAllUsers(){
   let state
   listUsers.style.display = "initial"
+  document.getElementById('searchUsers').style.display = "initial"
 }
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
