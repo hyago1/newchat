@@ -7,6 +7,8 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 
 //variaveis
 var msg = [];
+
+let list_myContact_Added = []
 var usersList = []
 var emailAdded = false
 var boxmsg = document.getElementById("box_Msg");
@@ -40,17 +42,19 @@ async function getContact(params) {
 }
 
 async function addMyContacts(idValue) {
-
-
+  console.log(mycode);
+  let { data: contacts , error} = await _supabase
+  .from("contacts")
+  .select( "owner").eq("contact",idValue  );
+console.log(contacts);
     lisMyContacts.innerHTML = ""
    console.log(idValue);
-    const { err } = await _supabase.from("contacts").insert({
+   
+  if (contacts == 0) {   const { err } = await _supabase.from("contacts").insert({
      owner:mycode,
      contact: idValue,
-    });
-
-
-
+    });}else{alert("Ja está na sua lista")}
+ 
 
 
     // getContact().then((value)=>{
@@ -77,7 +81,59 @@ async function addMyContacts(idValue) {
 }
 
 
-function openChat() {
+async function openChat() {
+  const { data } = await _supabase.auth.getSession();
+
+  let { data: users  } = await _supabase
+  .from("users")
+  .select("id").eq("email" ,data.session.user.email );
+  console.log(users);
+  mycode = users[0].id
+
+console.log(mycode);
+let { data: contacts , error} = await _supabase
+.from("contacts")
+.select("users(id,name,email,imgProfile)").eq("owner",mycode );
+
+
+
+list_myContact_Added = []
+contacts.forEach((value)=>{
+  list_myContact_Added.push(value)
+})
+
+
+console.log(list_myContact_Added);
+lisMyContacts.innerHTML = ""
+
+list_myContact_Added.map((value)=>{
+  console.log(value);
+  lisMyContacts.innerHTML +=`<li>
+  <div id="" onclick="closeChat(${value.users.id})" class="userContact">
+        <div class='userContactInfo'>
+        <div id='nicks'> 
+        <img onclick="openMenu()"class='userContactImgProfile' src='${value.users.imgProfile}'></img>
+
+  <span> ${value.users.name}</span><br>
+        </div>
+       
+    <span>Email: ${value.users.email}</span><br>
+    <span>Code: ${value.users.id}</span>
+  </div>
+
+    
+  </div>
+</li>`
+})
+
+
+
+
+
+
+
+
+
   getUsers().then((value)=>{ 
     usersList = []
     listUsers.innerHTML = ""
@@ -205,16 +261,7 @@ const updatePage = async () => {
 
   msg = [];
 
-  // const { dataa } = await _supabase
-  // .from('users')
-  // .select('name')
-  // .eq('contacts.owner', 1)
-  // console.log(dataa);
   const { data } = await _supabase.auth.getSession();
-
-
-
-
 
   let { data: users } = await _supabase
   .from("users")

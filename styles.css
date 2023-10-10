@@ -32,16 +32,21 @@ padding: 5px;
     overflow-y: auto;
     
 }
+#list_myContact li{
+    max-height: 50vh;
+}
 #nicks{
     display: flex;
     align-items: center;
     margin: 2px;
 }
-#list_users li{
-    width: 80%;
+#list_myContact li{
+margin-bottom: 2px;
+}
+#list_users li{opacity: 0.9;
     display: flex;
     justify-content: center;
-    margin: 15px;
+    margin: 10px;
 
 }
 .division{
