@@ -45,12 +45,13 @@ async function addMyContacts(idValue) {
   console.log(mycode);
   let { data: contacts , error} = await _supabase
   .from("contacts")
-  .select( "owner").eq("contact",idValue  );
+  .select( "owner, contact").eq("owner",mycode).eq("contact", idValue)
 console.log(contacts);
     lisMyContacts.innerHTML = ""
    console.log(idValue);
    
-  if (contacts == 0) {   const { err } = await _supabase.from("contacts").insert({
+  if (contacts == 0) { 
+    const { err } = await _supabase.from("contacts").insert({
      owner:mycode,
      contact: idValue,
     });}else{alert("Ja está na sua lista")}
@@ -83,6 +84,48 @@ console.log(contacts);
 
 async function openChat() {
   const { data } = await _supabase.auth.getSession();
+
+
+
+
+
+
+  getUsers().then((value)=>{ 
+    usersList = []
+    listUsers.innerHTML = ""
+    value.forEach((value)=>{
+      usersList.push(value)
+    })
+   
+    usersList.map((value,index)=>{
+
+      listUsers.innerHTML += `<li>
+      <div id="" onclick="closeChat(${value.id})" class="userContact">
+            <div class='userContactInfo'>
+            <div id='nicks'> 
+            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img>
+
+      <span> ${value.name}</span><br>
+            </div>
+           
+        <span>Email: ${value.email}</span><br>
+        <span>Code: ${value.id}</span>
+      </div>
+      <div class='add' onclick='addMyContacts(${value.id})' title="Adcionar como contato">+</div>
+        
+      </div>
+    </li>`
+    })
+
+
+    
+
+})    
+
+  document.getElementById('menuContactMenssages').style.width = "70%"
+  document.getElementById('menuContactMenssages').style.left = "0px"
+  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+
 
   let { data: users  } = await _supabase
   .from("users")
@@ -127,48 +170,24 @@ list_myContact_Added.map((value)=>{
 })
 
 
+lisMyContacts.animate(
+  [
+    { transform: "scale(0.92)" },
+    { transform: "scale(0.93)" },
+    { transform: "scale(0.94)" },
+    { transform: "scale(1)" },
+  ],
+  {
+    duration: 500,
+    direction: "alternate",
+  }
+);
 
 
 
 
 
 
-
-  getUsers().then((value)=>{ 
-    usersList = []
-    listUsers.innerHTML = ""
-    value.forEach((value)=>{
-      usersList.push(value)
-    })
-   
-    usersList.map((value,index)=>{
-
-      listUsers.innerHTML += `<li>
-      <div id="" onclick="closeChat(${value.id})" class="userContact">
-            <div class='userContactInfo'>
-            <div id='nicks'> 
-            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img>
-
-      <span> ${value.name}</span><br>
-            </div>
-           
-        <span>Email: ${value.email}</span><br>
-        <span>Code: ${value.id}</span>
-      </div>
-      <div class='add' onclick='addMyContacts(${value.id})' title="Adcionar como contato">+</div>
-        
-      </div>
-    </li>`
-    })
-
-
-    
-
-})    
-
-  document.getElementById('menuContactMenssages').style.width = "70%"
-  document.getElementById('menuContactMenssages').style.left = "0px"
-  document.getElementById('menuContactMenssages').style.transition = "0.4s"
 }
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
@@ -490,7 +509,10 @@ name = users[0].name
     document.getElementById("box_Msg").value = "";
   }
 }
-
+function openListAllUsers(){
+  let state
+  listUsers.style.display = "initial"
+}
 async function delet(index) {
   const { error } = await _supabase.from("mensages").delete().eq("id", index);
 

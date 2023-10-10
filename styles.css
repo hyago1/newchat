@@ -25,12 +25,17 @@ background-color: rgb(38, 43, 44);
 padding: 5px;
 }
 .list_users{
+
     width: 100%;
     height: auto;
     max-height: 70vh;
     margin: 0px;
     overflow-y: auto;
+
     
+}
+#list_users{
+    display: none;
 }
 #list_myContact li{
     max-height: 50vh;
