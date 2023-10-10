@@ -202,46 +202,38 @@ async function init() {
 
 
 const updatePage = async () => {
-  console.log(code);
+
   msg = [];
 
-
+  // const { dataa } = await _supabase
+  // .from('users')
+  // .select('name')
+  // .eq('contacts.owner', 1)
+  // console.log(dataa);
   const { data } = await _supabase.auth.getSession();
 
 
-getUsers().then(async (users)=>{
-  let confirmation;
 
-  if (users == undefined) {
 
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-    });
-  } else {    
 
-    users.forEach((value) => {
-  
-      if (value.email == data.session.user.user_metadata.email) {
-        confirmation = true;
-      }
-      else{
-        confirmation = false
-      }
-    });
+  let { data: users } = await _supabase
+  .from("users")
+  .select("email").eq("email", data.session.user.user_metadata.email);
+
+  if (users == 0) {
+     const { error } = await _supabase.from("users").insert({
+    email: data.session.user.user_metadata.email,
+    name: data.session.user.user_metadata.name,
+     imgProfile:data.session.user.user_metadata.avatar_url
+  });
+
   }
-  
-  if (!confirmation) {
-  emailAdded = true
-    const { error } = await _supabase.from("users").insert({
-      email: data.session.user.user_metadata.email,
-      name: data.session.user.user_metadata.name,
-      imgProfile:data.session.user.user_metadata.avatar_url
-    });
-    
+  else{
+  console.log("esse email ja existe");
   }
-  
-})
+     
+
+
 
 
 
