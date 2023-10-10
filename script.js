@@ -133,6 +133,9 @@ async function openChat() {
   console.log(users);
   mycode = users[0].id
 
+
+  
+
 console.log(mycode);
 let { data: contacts , error} = await _supabase
 .from("contacts")
@@ -194,14 +197,31 @@ lisMyContacts.animate(
 }
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
-
+let stringAleatoria
+var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 let { data: users  } = await _supabase
 .from("users")
 .select("id").eq("email" ,data.session.user.email );
 mycode = users[0].id
- code = value+mycode
 
-  const { error } = await _supabase.from("salas").insert({ key_room: code });
+if (value != mycode) {
+   code = value+mycode
+}
+else{
+  alert("Voce não pode mandar menssagens pra si mesmo")
+}
+
+
+
+ let { data: salas , error} = await _supabase
+ .from("salas")
+ .select( "key_room").eq("key_room",code)
+console.log(salas);
+
+   const { err } = await _supabase.from("salas").insert({ key_room: code });
+
+
+
 
 
 
@@ -497,22 +517,29 @@ if (!codeCheck) {
 }
 
 async function send() {
-  const { data } = await _supabase.auth.getSession();
-  let valueBoxMenssage = boxmsg.value;
-let name
-  let { data: users, error } = await _supabase
-  .from("users")
-  .select("name").eq("email" ,data.session.user.email );
-name = users[0].name
-  if (boxmsg.value != "") {
-    const { error } = await _supabase.from("mensages").insert({
-      datamsg: valueBoxMenssage,
-      created_at: getHour(),
-      key_room_message: code,
-      nickname: name,
-    });
-    document.getElementById("box_Msg").value = "";
+
+  if (code !=null) {
+    const { data } = await _supabase.auth.getSession();
+    let valueBoxMenssage = boxmsg.value;
+  let name
+    let { data: users, error } = await _supabase
+    .from("users")
+    .select("name").eq("email" ,data.session.user.email );
+  name = users[0].name
+  
+  
+  
+    if (boxmsg.value != "") {
+      const { error } = await _supabase.from("mensages").insert({
+        datamsg: valueBoxMenssage,
+        created_at: getHour(),
+        key_room_message: code,
+        nickname: name,
+      });
+      document.getElementById("box_Msg").value = "";
+    }
   }
+ 
 }
 function openListAllUsers(){
   let state
