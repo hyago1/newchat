@@ -201,6 +201,14 @@ lisMyContacts.animate(
 }
 
 
+document.addEventListener('touchmove', function(e) {
+  var x = e.touches[0].clientX;
+  console.log(x);
+  if (x >15 && x < 30 ) {
+    openChat()
+    x = null
+  }
+});
 
 
 async function closeChat(value) {
