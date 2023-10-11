@@ -82,9 +82,10 @@ margin-bottom: 2px;
     background-color: #4c595e;
 }
 .favorite{
-    position: relative;
-    bottom: 13px;
-    right: 15px;
+margin-right: 20px;
+    width: 15px;
+    height: 15px;
+    
 }
 #searchUsers{
     padding: 10px;

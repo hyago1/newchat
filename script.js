@@ -82,7 +82,11 @@ console.log(contacts);
 }
 
 
+
 async function openChat() {
+
+
+
   const { data } = await _supabase.auth.getSession();
 
 
@@ -166,7 +170,7 @@ list_myContact_Added.map((value)=>{
     <span>Email: ${value.users.email}</span><br>
     <span>Code: ${value.users.id}</span>
   </div>
-  <img width="24" height="24" class='favorite' src="https://img.icons8.com/material-sharp/24/000000/hearts.png" alt="hearts"/>
+  <img width="24" height="24" class='favorite' src="./iconSaved.svg" alt="hearts"/>
     
   </div>
 </li>`
@@ -195,6 +199,17 @@ lisMyContacts.animate(
 
 
 }
+
+
+document.addEventListener('touchmove', function(e) {
+  var x = e.touches[0].clientX;
+  console.log(x);
+  if (x >20 && x < 30 ) {
+    openChat()
+    x = null
+  }
+});
+
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
 let stringAleatoria
