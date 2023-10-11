@@ -126,8 +126,13 @@ async function openChat() {
 
 })    
 
-  document.getElementById('menuContactMenssages').style.width = "30%"
+const mediaQuery = window.matchMedia('(min-width: 768px)')
+if (mediaQuery.matches) {
+  document.getElementById('menuContactMenssages').style.width = "40%"
+}else{
   document.getElementById('menuContactMenssages').style.width = "70%"
+}
+
   document.getElementById('menuContactMenssages').style.left = "0px"
   document.getElementById('menuContactMenssages').style.transition = "0.7s"
 
