@@ -115,7 +115,7 @@ async function openChat() {
         <span>Email: ${value.email}</span><br>
         <span>Code: ${value.id}</span>
       </div>
-      <div class='add' onclick='addMyContacts(${value.id})' title="Adcionar como contato">+</div>
+      <div class='add' onclick='addMyContacts(${value.id})' title='Adcionar como "meu"'>+</div>
         
       </div>
     </li>`
@@ -126,9 +126,10 @@ async function openChat() {
 
 })    
 
+  document.getElementById('menuContactMenssages').style.width = "30%"
   document.getElementById('menuContactMenssages').style.width = "70%"
   document.getElementById('menuContactMenssages').style.left = "0px"
-  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+  document.getElementById('menuContactMenssages').style.transition = "0.7s"
 
 
   let { data: users  } = await _supabase
@@ -528,7 +529,10 @@ _supabase
 if (!codeCheck) {
   code = prompt("Digite o código da sala");
   codeCheck = true;
-  codeInfo.textContent = code;
+if (code != null) {
+   codeInfo.textContent = ': Private';
+}
+ 
   updatePage();
 }
 
