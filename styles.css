@@ -151,7 +151,7 @@ border-bottom: 1px solid grey;
     width: 32px;
     height: 30px;
     border-radius: 50%;
-}i
+}
 
 
 
@@ -163,6 +163,7 @@ border-bottom: 1px solid grey;
     align-items: center;
     width: 5em;
     height: 2em;
+    background-color: grey;
     position: absolute;
     right: 0;
     top: 2em;
@@ -351,7 +352,7 @@ margin-right: 10px;
     color: white;
 }
 #logout, #codeCode{
-    background-color: #7d8b8d;
+    background-color: transparent;
     font-family: 'Raleway', sans-serif;
     font-size: 18px;
 color: rgb(0, 0, 0);font-weight: bold;
