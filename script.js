@@ -103,7 +103,7 @@ async function openChat() {
    
     usersList.map((value,index)=>{
 
-      listUsers.innerHTML += `<li>
+      listUsers.innerHTML += `<li >
       <div id="" onclick="closeChat(${value.id})" class="userContact">
             <div class='userContactInfo'>
             <div id='nicks'> 
@@ -246,20 +246,22 @@ console.log(salas);
 
 
 
-
-
-  document.getElementById('menuContactMenssages').style.width = "0%"
+        document.getElementById('menuContactMenssages').style.width = "0%"
   document.getElementById('menuContactMenssages').style.left = "-1000px"
-  document.getElementById('menuContactMenssages').style.transition = "0.4s"
+  document.getElementById('menuContactMenssages').style.transition = "0.3s"
   updatePage()
 }
 async function closePainelChats(value) {
 
 
-  document.getElementById('menuContactMenssages').style.width = "0%"
-  document.getElementById('menuContactMenssages').style.left = "-1000px"
-  document.getElementById('menuContactMenssages').style.transition = "0.4s"
-  updatePage()
+  document.getElementById('menuContactMenssages').style.left = "-1000px",
+    
+  document.getElementById('menuContactMenssages').style.width = "0%",
+
+ document.getElementById('menuContactMenssages').style.transition = "1.5s"
+  // document.getElementById('menuContactMenssages').style.left = "-1000px"
+ 
+
 }
 
 
