@@ -227,8 +227,16 @@ let { data: users  } = await _supabase
 mycode = users[0].id
 
 if (value != mycode) {
-   code = value+mycode
-}
+  if (mycode>value) {
+    code = "k"+mycode+""+value
+    console.log(mycode);
+  }
+  else{
+   code = "k"+value+""+mycode
+   console.log(code);
+  }
+   
+ } // code = value+mycode
 else{
   alert("Voce não pode mandar menssagens pra si mesmo")
 }
