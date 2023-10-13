@@ -17,6 +17,7 @@ outline: none;
     outline: none !important;
    background-color: transparent !important;
 }
+
 .header{
 z-index: 1;
 color: aliceblue;
@@ -295,6 +296,33 @@ ul{
     border: none;
     color: hsl(0, 0%, 83%);
 }
+.infoContacts{
+
+    display: flex;
+
+    align-items: center;
+    width:26%;
+    position: absolute;
+    left: 10px;
+}
+
+#avatarSelected{
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+     border: 3px solid green;
+     width: 22px;
+     height: 20px;
+     border-radius: 50%;
+     margin-left: 5px;
+ }
+ .imgAvatarSelected{
+ width: 95%;
+    height: 95%;
+    border-radius: 50%;
+ }
+
 .info{
    
     display: flex;
@@ -395,8 +423,7 @@ background-color: rgb(160, 160, 160);
 #contact{
     background-color: #363d3f;
     color: rgb(167, 165, 165);
-    position: absolute;
-    left: 10px;
+   
 }
 #contact:hover{
     background-color: #434d50;

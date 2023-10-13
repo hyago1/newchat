@@ -219,11 +219,23 @@ document.addEventListener('touchmove', function(e) {
 
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
-let stringAleatoria
-var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+
+
 let { data: users  } = await _supabase
 .from("users")
 .select("id").eq("email" ,data.session.user.email );
+
+const needle = usersList.find((currObj) => {
+  // Note que o callback retornará `true` se o objeto
+  // atual tiver propriedade `id` igual a 2.
+  return currObj.id === value
+});
+console.log(needle);
+
+document.getElementById('avatarSelected').style.display = "flex"
+document.getElementById('avatarSelected').innerHTML = `<img onclick="openMenu()" class='imgAvatarSelected' src='${needle.imgProfile}'></img>`;
+
 mycode = users[0].id
 
 if (value != mycode) {
