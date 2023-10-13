@@ -212,6 +212,7 @@ h2{
         font-size: 10px;
     }
 
+
   }
 .group_msgt{
  padding: 15px;
@@ -286,20 +287,6 @@ ul{
 
   }
   
-  .optionMenssage{
-    display: none;
-    position: absolute;
-    right: 5px;
-    bottom: 83px;
-    border-radius: 11px;
-    background-color: #2c3b42;
-    padding: 12px;
-    display:flex; flex-direction:column;
-  }
-  .optionMenssage span{
-margin: 3px;
-font-weight: bold;
-  }
 
 
 #box_Msg{
@@ -320,21 +307,29 @@ font-weight: bold;
     left: 10px;
 }
 
-#avatarSelected{
-
-    display: none;
-    justify-content: center;
+.infoContacts div{
+    padding-inline: 4px;
+    display: flex;
+    border-radius: 5px;
     align-items: center;
-     border: 3px solid green;
-     width: 16px;
-     height: 14px;
-     border-radius: 50%;
-     margin-left: 5px;
- }
+    background-color: #2d3334;
+    margin-inline: 4px;
+    cursor: pointer;
+    
+}
+.infoContacts div:hover{
+    background-color: #363c3d;
+}
  .imgAvatarSelected{
- width: 95%;
-    height: 95%;
+ width: 20px;
+
     border-radius: 50%;
+ }
+ #nameAvatarSelected{
+   
+    font-size: 12px;
+    margin: 5px; 
+    margin-inline: 4px;
  }
 
 .info{
@@ -400,7 +395,7 @@ border-radius: 0px  7px 7px 0px ;
  align-items: center;
     padding: 0px;
 }
-#login span{
+#login {
     margin-right: 5px;  
 }
 .login {
@@ -441,4 +436,31 @@ background-color: rgb(160, 160, 160);
 }
 #contact:hover{
     background-color: #434d50;
+}
+@media only screen and (max-width: 600px) {
+    .infoContacts div{
+        padding-inline: 2px;
+        display: flex;
+        border-radius: 5px;
+        align-items: center;
+        background-color: #2d3334;
+
+        margin-inline: 2px;
+     
+        
+    }
+    .infoContacts div:hover{
+        background-color: #363c3d;
+    }
+     .imgAvatarSelected{
+     width: 10;
+    
+        border-radius: 50%;
+     }
+     #nameAvatarSelected{
+       
+        font-size: 10px;
+        margin: 5px; 
+        margin-inline: 2px;
+     }
 }
