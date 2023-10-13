@@ -218,7 +218,7 @@ document.addEventListener('touchmove', function(e) {
   }
 });
 
-
+var selected = false
 async function closeChat(value) {
   const { data } = await _supabase.auth.getSession();
 
@@ -233,11 +233,14 @@ const needle = usersList.find((currObj) => {
   // atual tiver propriedade `id` igual a 2.
   return currObj.id === value
 });
+
+if (document.getElementById("avatarSelected")) {
+  document.getElementById("avatarSelected").remove()
+}
+
 console.log(needle);
-
-document.getElementById('avatarSelected').style.display = "flex"
-document.getElementById('avatarSelected').innerHTML = `<img  class='imgAvatarSelected' src='${needle.imgProfile}'></img>`;
-
+document.getElementById('infoContacts').innerHTML += `<div id='avatarSelected'><img  class='imgAvatarSelected' src='${needle.imgProfile}'></img><p id='nameAvatarSelected'>${needle.name}</p></div>`;
+selected = true
 mycode = users[0].id
 
 if (value != mycode) {
