@@ -55,7 +55,9 @@ console.log(contacts);
      owner:mycode,
      contact: idValue,
     });}else{alert("Ja está na sua lista")}
- 
+
+    document.getElementById('searchUsers').style.display = "none"
+    listUsers.style.display = "none"
 
 
     // getContact().then((value)=>{
@@ -426,7 +428,7 @@ if (code != undefined || code != "NaN" || code != null) {
     <span id="nickname_ball_msg">${value.nickname}</span>
 
         <button id='delete'alt='Deletar mensagem' onclick='delet(${value.id})'>X</button>
-
+    
         </div>
  
         <div class='info' > 
