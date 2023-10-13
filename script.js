@@ -234,7 +234,7 @@ const needle = usersList.find((currObj) => {
 console.log(needle);
 
 document.getElementById('avatarSelected').style.display = "flex"
-document.getElementById('avatarSelected').innerHTML = `<img onclick="openMenu()" class='imgAvatarSelected' src='${needle.imgProfile}'></img>`;
+document.getElementById('avatarSelected').innerHTML = `<img  class='imgAvatarSelected' src='${needle.imgProfile}'></img>`;
 
 mycode = users[0].id
 
@@ -316,8 +316,8 @@ async function longinGoogle() {
 }
 
 function getHour() {
-  let hour = dt.getHours();
-  let minutes = dt.getMinutes();
+  let hour = new Date().getHours();
+  let minutes = new Date().getMinutes();
   let time = hour + ":" + minutes;
   return time;
 }
@@ -451,9 +451,9 @@ document.addEventListener("visibilitychange", function () {
     document.visibilityState == "visible" ||
     document.visibilityState == "hidden"
   ) {
-    setTimeout(() => {
+
       updatePage();
-    }, 3000);
+   
   }
   // Modify behavior...
 });
