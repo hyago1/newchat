@@ -88,7 +88,10 @@ console.log(contacts);
 async function openChat() {
 
 
-
+  const { dataa } = await _supabase
+  .from('users')
+  .update({ online: true })
+  .eq('id', mycode)
   const { data } = await _supabase.auth.getSession();
 
 
@@ -123,27 +126,24 @@ async function openChat() {
          
       </div>
     </li>`
+
+
+        if (value.online == true) {
+    
+      document.getElementById('status'+value.id).style.color =  '#00ff14'
+    
+    }
+    else{
+ 
+      document.getElementById('status'+value.id).style.color =  'white'    
+    
+    }
     })
 
 
 
 
-    _supabase
-  .channel('any')
-  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'users' }, payload => {
- 
-    if (payload.new.online == true) {
-    
-      document.getElementById('status'+payload.new.id).style.color =  '#00ff14'
-    
-    }
-    else{
- 
-      document.getElementById('status'+payload.new.id).style.color =  'white'    
-    
-    }
-  })
-  .subscribe()
+
 
 
     
@@ -229,6 +229,28 @@ lisMyContacts.animate(
 
 
 }
+
+
+
+
+
+
+_supabase
+.channel('any')
+.on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'users' }, payload => {
+
+  if (payload.new.online == true) {
+  
+    document.getElementById('status'+payload.new.id).style.color =  '#00ff14'
+  
+  }
+  else{
+
+    document.getElementById('status'+payload.new.id).style.color =  'white'    
+  
+  }
+})
+.subscribe()
 
 
 document.addEventListener('touchmove', function(e) {
