@@ -7,7 +7,7 @@ const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
 
 //variaveis
 var msg = [];
-
+let status;
 let list_myContact_Added = []
 var usersList = []
 var emailAdded = false
@@ -93,35 +93,57 @@ async function openChat() {
 
 
 
-
-
-
   getUsers().then((value)=>{ 
     usersList = []
     listUsers.innerHTML = ""
     value.forEach((value)=>{
       usersList.push(value)
     })
-   
+
     usersList.map((value,index)=>{
+
+
 
       listUsers.innerHTML += `<li >
       <div id="" onclick="closeChat(${value.id})" class="userContact">
-            <div class='userContactInfo'>
+
+    <div class='divMainContacts'">  
+     <div class='userContactInfo'>
             <div id='nicks'> 
             <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img>
 
-      <span> ${value.name}</span><br>
+      <span id='status${value.id}'> ${value.name}</span><br>
             </div>
            
         <span>Email: ${value.email}</span><br>
         <span>Code: ${value.id}</span>
-      </div>
+      </div>  
       <div class='add' onclick='addMyContacts(${value.id})' title='Adcionar como "meu"'>+</div>
-        
+        </div>
+         
       </div>
     </li>`
     })
+
+
+
+
+    _supabase
+  .channel('any')
+  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'users' }, payload => {
+ 
+    if (payload.new.online == true) {
+    
+      document.getElementById('status'+payload.new.id).style.color =  '#00ff14'
+    
+    }
+    else{
+ 
+      document.getElementById('status'+payload.new.id).style.color =  'white'    
+    
+    }
+  })
+  .subscribe()
 
 
     
@@ -142,7 +164,7 @@ if (mediaQuery.matches) {
   let { data: users  } = await _supabase
   .from("users")
   .select("id").eq("email" ,data.session.user.email );
-  console.log(users);
+  
   mycode = users[0].id
 
 
@@ -165,21 +187,21 @@ console.log(list_myContact_Added);
 lisMyContacts.innerHTML = ""
 
 list_myContact_Added.map((value)=>{
-  console.log(value);
-  lisMyContacts.innerHTML +=`<li>
+lisMyContacts.innerHTML +=`<li>
   <div id="" onclick="closeChat(${value.users.id})" class="userContact">
+  <div class='divMainContacts'">  
         <div class='userContactInfo'>
         <div id='nicks'> 
         <img onclick="openMenu()"class='userContactImgProfile' src='${value.users.imgProfile}'></img>
 
-  <span> ${value.users.name}</span><br>
+        <span id='status${value.id}'> ${value.users.name}</span><br>
         </div>
        
     <span>Email: ${value.users.email}</span><br>
     <span>Code: ${value.users.id}</span>
   </div>
   <img width="24" height="24" class='favorite' src="./iconSaved.svg" alt="hearts"/>
-    
+    </div>
   </div>
 </li>`
 })
@@ -344,6 +366,7 @@ async function init() {
     .select()
     .eq("key_room_message", code);
 
+    
   return data;
 }
 
@@ -352,13 +375,17 @@ async function init() {
 
 const updatePage = async () => {
 
+ 
+
   msg = [];
 
   const { data } = await _supabase.auth.getSession();
 
   let { data: users } = await _supabase
   .from("users")
-  .select("email").eq("email", data.session.user.user_metadata.email);
+  .select("email, id").eq("email", data.session.user.user_metadata.email);
+  console.log("updatePage()");
+  mycode = users[0].id
 
   if (users == 0) {
      const { error } = await _supabase.from("users").insert({
@@ -387,7 +414,7 @@ if (code != undefined || code != "NaN" || code != null) {
     let avatar = document.getElementById("avatar");
   
 
-    console.log(data.session);
+
     let verificated;
     if (data.session.user.aud == "authenticated") {
       verificated = true;
@@ -451,17 +478,7 @@ if (code != undefined || code != "NaN" || code != null) {
 
 };
 
-document.addEventListener("visibilitychange", function () {
-  if (
-    document.visibilityState == "visible" ||
-    document.visibilityState == "hidden"
-  ) {
 
-      updatePage();
-   
-  }
-  // Modify behavior...
-});
 
 function logoutGoogle() {
   _supabase.auth.signOut();
@@ -470,6 +487,10 @@ function logoutGoogle() {
     window.location.href = "/index.html";
   }, 1360);
 }
+
+
+
+
 
 _supabase
   .channel("custom-all-channel")
@@ -567,6 +588,47 @@ if (code != null) {
  
   updatePage();
 }
+
+
+
+
+
+
+document.addEventListener("visibilitychange", async function () {
+  if (
+    document.visibilityState == "visible"
+  ) {
+    console.log("");
+const { data, error } = await _supabase
+.from('users')
+.update({ online: true })
+.eq('id', mycode)
+      updatePage();
+   
+  }
+  else{
+    const { data, error } = await _supabase
+.from('users')
+.update({ online: false })
+.eq('id', mycode)
+
+      updatePage();
+  }
+  
+  // Modify behavior...
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 async function send() {
 

@@ -39,6 +39,11 @@ padding: 5px;
 
     
 }
+#list_users  li{
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
 #list_users{
     display: none;
 }
@@ -71,10 +76,10 @@ margin-bottom: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
+    width: 30px;
 border-radius: 50%;
-
-    height: 45px;
+margin-right: 10px;
+    height: 30px;
     font-size: x-large;
     font-weight: bold;
 }
@@ -107,13 +112,13 @@ border-bottom: 1px solid grey;
 
 .userContact{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+   flex-direction: column;
     width: 100%;
     background-color: #243036;
     border-radius: 4px;
     padding: 8px;
     padding-left: 10px;
+    font-size: 13px;
 
 }
 .userContact:hover{
@@ -437,6 +442,14 @@ background-color: rgb(160, 160, 160);
 #contact:hover{
     background-color: #434d50;
 }
+.divMainContacts{
+    
+    display: flex;
+justify-content: space-between;
+align-items: center;
+    width: 100%;
+}
+
 @media only screen and (max-width: 600px) {
     .infoContacts div{
         padding-inline: 2px;
