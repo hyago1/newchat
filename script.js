@@ -563,6 +563,8 @@ _supabase
     "postgres_changes",
     { event: "INSERT", schema: "public", table: "mensages" },
     async (payload) => {
+
+      fileList = null
       const { data, error } = await _supabase.auth.getSession();
       console.log(payload);
 
@@ -692,6 +694,7 @@ document.addEventListener("visibilitychange", async function () {
   if (
     document.visibilityState == "visible"
   ) {
+    msg = []
     console.log("");
 const { data, error } = await _supabase
 .from('users')
@@ -701,6 +704,7 @@ const { data, error } = await _supabase
    
   }
   else{
+    msg = []
     const { data, error } = await _supabase
 .from('users')
 .update({ online: false })
@@ -796,6 +800,10 @@ let urlImg = data;
   else{
     alert("Escolha algum usuario para conversar ")
   }
+
+
+
+
 }
   
 }

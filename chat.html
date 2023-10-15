@@ -23,12 +23,7 @@
 
 
 <script>
- function showBtn(){
-document.getElementById('btn').style.display = 'initial'
-document.getElementById('file').style.display = 'none'
-document.getElementById('btn').style.transition = '1s;'
 
-  }
 </script>
 
 <body id="body" onunload="alert('The page is unloaded')" >
@@ -96,9 +91,9 @@ document.getElementById('btn').style.transition = '1s;'
     </ul>
   </div>
   <div class="group_msgt">
-    <div><input class="msgt" type="text" onkeypress="showBtn()"  id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
+    <div><input class="msgt" type="text"   id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
       
-      <label for='file'>Upload </label>
+      <label for='file'>+</label>
       <input type="file" name="" id="file">
       <button class="msgt" id="btn" type="button" value=">" onclick="send()" ><img src="./sendIcon.png" alt="" srcset=""></button>
     </div>
