@@ -203,7 +203,7 @@ h2{
 .area_Menssage{
     background-color:transparent;
     width: 95%;
- height: 89vh;
+    height: 92vh;
     overflow-y: auto;
 }
 
@@ -305,11 +305,11 @@ ul{
 .infoContacts{
 
     display: flex;
-
+height: 100%;
     align-items: center;
     width:26%;
     position: absolute;
-    left: 10px;
+    left: 0px;
 }
 
 .infoContacts div{
@@ -355,17 +355,31 @@ ul{
     color: rgb(92, 92, 92);
     background-color:transparent;
 }
+input[type='file'] {
+    display: none
+  }
+ label{
+    
+    font-weight: bold;
+    display: flex;
+align-items: center;
+    font-size: 10px;
+    padding: 2px;
+    background-color: #333333;
+ }
 #btn{
+   
     color: rgb(153, 153, 153);
     cursor: pointer;
     border: none;
     width: 5em;
-display: flex;
+    display: flex;
 justify-content: center;
 align-items: center;
 font-family:cursive;
     background-color: transparent;
 border-radius: 0px  7px 7px 0px ;
+
 }
 #btn:hover{
  background-color: rgb(74, 77, 78);;;
@@ -373,6 +387,15 @@ border-radius: 0px  7px 7px 0px ;
    transition: 0.4s;
 
 }
+#imgMsg{
+    max-width: 100%;
+    cursor: pointer;
+}
+#imgMsg:hover {
+
+ 
+    transform: scale(1.01);
+  }
 #btn img{
 
     width: 70%;
@@ -412,7 +435,7 @@ margin-right: 10px;
     right: 0px;
 }
 
-.login button , #contact{
+.login button {
     background-color: #454e51;
     border: none;
 
@@ -435,12 +458,17 @@ width: 100%;
 background-color: rgb(160, 160, 160);
 }
 #contact{
-    background-color: #363d3f;
+    
+    font-size: 10px;
+    border: none;
+    margin-left: 5px;
+    height: 100%;
+    background-color: transparent;
     color: rgb(167, 165, 165);
    
 }
 #contact:hover{
-    background-color: #434d50;
+    background-color: #32383ab6;
 }
 .divMainContacts{
     

@@ -23,6 +23,14 @@ let mycode
 //variaveis
 
 
+let fileList;
+        
+const fileSelector = document.getElementById('file');
+fileSelector.addEventListener('change', (event) => {
+fileList = event.target.files[0];
+
+});
+
 
 
 
@@ -82,8 +90,6 @@ console.log(contacts);
   
 
 }
-
-
 
 async function openChat() {
 
@@ -241,12 +247,17 @@ _supabase
 
   if (payload.new.online == true) {
   
-    document.getElementById('status'+payload.new.id).style.color =  '#00ff14'
+    if (document.getElementById('status'+payload.new.id)) {
+       document.getElementById('status'+payload.new.id).style.color =  '#00ff14'
   
+    }
+   
   }
   else{
-
-    document.getElementById('status'+payload.new.id).style.color =  'white'    
+if (document.getElementById('status'+payload.new.id)) {
+  document.getElementById('status'+payload.new.id).style.color =  'white'    
+}
+    
   
   }
 })
@@ -337,7 +348,7 @@ async function closePainelChats(value) {
 
 
 
-function openMenu() {
+async function openMenu() {
 
 
 
@@ -398,6 +409,7 @@ async function init() {
 const updatePage = async () => {
 
  
+
 
   msg = [];
 
@@ -473,7 +485,33 @@ if (code != undefined || code != "NaN" || code != null) {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
       }
 
-      list.innerHTML += `<li>
+
+
+      
+  
+
+if (value.file == true) {
+  list.innerHTML += `<li>
+  <div class="ball_msg">
+  <div class='info_details'>  
+
+  <span id="nickname_ball_msg">${value.nickname}</span>
+
+      <button id='delete'alt='Deletar mensagem' onclick='delet(${value.id})'>X</button>
+  
+      </div>
+
+      <div class='info' > 
+      <span class="msg"><img id='imgMsg' src="${value.datamsg}"></img></span>
+      <span id='hour'>${formatedTime}</span>
+      
+      </div>
+     
+  </div>
+  </li>`;
+
+}else{
+    list.innerHTML += `<li>
     <div class="ball_msg">
     <div class='info_details'>  
 
@@ -484,13 +522,18 @@ if (code != undefined || code != "NaN" || code != null) {
         </div>
  
         <div class='info' > 
-        <span class="msg">${datamsg}</span>
+        <span class="msg">${value.datamsg}</span>
         <span id='hour'>${formatedTime}</span>
         
         </div>
        
     </div>
     </li>`;
+
+}
+      
+  
+
     });
   });
 }
@@ -531,16 +574,21 @@ _supabase
 
       if (payload.new.key_room_message == code) {
         let datamsg = payload.new.datamsg;
-
-        if (
+if (payload.new.file == false) {
+       if (
+        
           payload.new.datamsg.startsWith("http://") ||
           payload.new.datamsg.startsWith("https://") ||
           payload.new.datamsg.startsWith("www.")
         ) {
           datamsg = `<a href='${payload.new.datamsg}'>${payload.new.datamsg}</a>`;
         }
+}
+   
         let formatedTime = payload.new.created_at.slice(0, 5);
-        list.innerHTML += `<li >
+
+        if (payload.new.file == true) {
+          list.innerHTML += `<li >
         <div id='${payload.new.id}' class="ball_msg">
         <div class='info_details'>  
  
@@ -551,13 +599,37 @@ _supabase
          </div>
   
          <div class='info' > 
-         <span class="msg">${datamsg}</span>
+         <span class="msg">
+         <img id='imgMsg' src="${datamsg}"></img>
+         </span>
          <span id='hour'>${formatedTime}</span>
          
          </div>
         
      </div>
-     </li>`;
+     </li>`;}else{
+      list.innerHTML += `<li >
+      <div id='${payload.new.id}' class="ball_msg">
+      <div class='info_details'>  
+
+      <span id="nickname_ball_msg">${payload.new.nickname}</span>
+
+       <button id='delete'alt='Deletar mensagem' onclick='delet(${payload.new.id})'>X</button>
+
+       </div>
+
+       <div class='info' > 
+       <span class="msg">${datamsg}</span>
+       <span id='hour'>${formatedTime}</span>
+       
+       </div>
+      
+   </div>
+   </li>`;
+     }
+
+
+        
 
         const e = document.getElementById("area_Menssage");
         const last = document.getElementById(payload.new.id);
@@ -654,6 +726,11 @@ const { data, error } = await _supabase
 
 async function send() {
 
+  console.log(fileList);
+
+
+console.log(fileList);
+if (fileList == undefined) {
   if (code !=null) {
     const { data } = await _supabase.auth.getSession();
     let valueBoxMenssage = boxmsg.value;
@@ -675,7 +752,52 @@ async function send() {
       document.getElementById("box_Msg").value = "";
     }
   }
- 
+  else{
+    alert("Escolha algum usuario para conversar ")
+  }
+
+}
+else{
+
+  const { dataa, error } = await _supabase
+  .storage
+  .from('img')
+  .upload('/'+fileList.name, fileList, {
+  cacheControl: '3600',
+  upsert: false
+  })
+
+  const { data } = _supabase
+  .storage
+  .from('img')
+  .getPublicUrl(fileList.name)
+console.log(data);
+
+let urlImg = data;
+
+  if (code !=null) {
+    const { data } = await _supabase.auth.getSession();
+  let name
+    let { data: users, error } = await _supabase
+    .from("users")
+    .select("name").eq("email" ,data.session.user.email );
+  name = users[0].name
+  
+      const { errr } = await _supabase.from("mensages").insert({
+        datamsg: urlImg.publicUrl,
+        created_at: getHour(),
+        key_room_message: code,
+        nickname: name,
+        file:true
+      });
+      document.getElementById("box_Msg").value = "";
+    
+  }
+  else{
+    alert("Escolha algum usuario para conversar ")
+  }
+}
+  
 }
 function openListAllUsers(){
   let state

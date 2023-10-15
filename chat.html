@@ -20,7 +20,18 @@
   <title>Chat</title>
 </head>
 
-<body id="body" >
+
+
+<script>
+ function showBtn(){
+document.getElementById('btn').style.display = 'initial'
+document.getElementById('file').style.display = 'none'
+document.getElementById('btn').style.transition = '1s;'
+
+  }
+</script>
+
+<body id="body" onunload="alert('The page is unloaded')" >
 
 <header class="header">
   <div id="infoContacts" class="infoContacts">
@@ -85,47 +96,19 @@
     </ul>
   </div>
   <div class="group_msgt">
-    <div><input class="msgt" type="text" id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
-
+    <div><input class="msgt" type="text" onkeypress="showBtn()"  id="box_Msg" placeholder="Digite aqui" name="menssage" id="menssage" />
+      
+      <label for='file'>Upload </label>
+      <input type="file" name="" id="file">
       <button class="msgt" id="btn" type="button" value=">" onclick="send()" ><img src="./sendIcon.png" alt="" srcset=""></button>
     </div>
   </div>
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <script src="./script.js"></script>
-  <!-- <script>
-        const { createClient } = supabase;
-window.HTMLElement.prototype.scrollIntoView = function () {};
-// Create a single supabase client for interacting with your database
-const key =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3NoZmR2d29jZnR6cXV0aHN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTU4MzUwNDAsImV4cCI6MjAxMTQxMTA0MH0.rTKp9LT3w46TM7BiMXV4a-BO553h9uy5bfk8prWYyQ8";
-const _supabase = createClient("https://qlwshfdvwocftzquthsv.supabase.co", key);
-    let fileList;
-        
-            const fileSelector = document.getElementById('input');
-  fileSelector.addEventListener('change', (event) => {
-    fileList = event.target.files[0];
-   
-  });
- async function a() { 
-    console.log(fileList);
-
-   
-const { data, error } = await _supabase
-  .storage
-  .from('img')
-  .upload('/'+fileList.name, fileList, {
-    cacheControl: '3600',
-    upsert: false
-  })
-  console.log();
-
-        }
 
 
-
-        
        
-    </script> -->
+    
 </body>
 
 </html>
