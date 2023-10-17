@@ -25,11 +25,11 @@ let mycode
 
 
 let fileList;
-        
+let fileListBuckup;    
 const fileSelector = document.getElementById('file');
 fileSelector.addEventListener('change', (event) => {
 fileList = event.target.files[0];
-
+fileListBuckup = event.target.files[0];
 console.log(fileList);
 
 document.getElementById('imagePreview').style.display = "flex"
@@ -115,7 +115,7 @@ console.log(contacts);
   
 
 }
-
+let valueid
 async function openChat() {
 
 
@@ -136,7 +136,7 @@ async function openChat() {
 
     usersList.map((value,index)=>{
 
-
+valueid = value.id
 
       listUsers.innerHTML += `<li >
       <div id="" onclick="closeChat(${value.id})" class="userContact">
@@ -502,9 +502,6 @@ else{
 
 const updatePage = async () => {
 
- 
-
-
   msg = [];
 
   const { data } = await _supabase.auth.getSession();
@@ -523,13 +520,9 @@ const updatePage = async () => {
   });
 
   }
-  else{
-  console.log("esse email ja existe");
-  }
+
      
-
-
-
+console.log("Code>>>> "+code);
 if (code != undefined || code != "NaN" || code != null) {
   init().then(async (value) => {
     let avatar = document.getElementById("avatar");
@@ -742,7 +735,7 @@ if (payload.new.file == false) {
         );
 
         if (payload.new.nickname != data.session.user.email) {
-          navigator.serviceWorker.register("sw.js");
+          navigator.serviceWorker.register("./scripts/sw.js");
           if (
             Notification.permission !== "denied" ||
             Notification.permission !== "default"
@@ -785,7 +778,7 @@ document.addEventListener("visibilitychange", async function () {
   ) {
     list.innerHTML = ""
     msg = []
-    console.log("");
+    console.log("visible");
 const { data, error } = await _supabase
 .from('users')
 .update({ online: true })
@@ -796,12 +789,17 @@ const { data, error } = await _supabase
   else{
     msg = []
     list.innerHTML = ""
+    console.log("invisiblie");
     const { data, error } = await _supabase
 .from('users')
 .update({ online: false })
 .eq('id', mycode)
 
-      updatePage();
+
+if (document.getElementById('status'+valueid)) {
+  document.getElementById('status'+valueid).style.color =  'white'   
+}
+
   }
   
   // Modify behavior...
@@ -903,9 +901,10 @@ let urlImg = data;
 }
 
 
-function deleteImg() {
+async function deleteImg() {
   fileSelector.value = ''
 document.getElementById('imagePreview').style.display = "none"
+
 }
 
 function openListAllUsers(){
