@@ -33,7 +33,25 @@ fileList = event.target.files[0];
 console.log(fileList);
 
 document.getElementById('imagePreview').style.display = "flex"
-document.getElementById('blah').src=URL.createObjectURL(event.target.files[0]);
+if (fileList.type.split("/")[0] == "image") {
+  if (document.getElementById('labelFile')) {
+    document.getElementById('labelFile').remove()
+
+  }
+  document.getElementById('blah').style.display = "flex"
+
+  document.getElementById('blah').src=URL.createObjectURL(event.target.files[0]);
+
+}else{
+  if (document.getElementById('labelFile')) {
+    document.getElementById('labelFile').remove()
+
+  }
+  console.log("ok");
+  document.getElementById('blah').style.display = "none"
+  imagePreview.innerHTML += `<label id="labelFile">${fileList.name}</label>`
+}
+
 
 
 });
@@ -428,7 +446,7 @@ if (up == true) {
   </video>`
   }
   if (value == "pdf") {
-    message = `<embed id='imgMsg' src="${msg}"></embed>`
+    message = `<embed id='imgMsg' src="${msg}" type='application/pdf'></embed>`
   }
   if (value == "vnd.android.package-archive") {
     message = `<embed id='imgMsg' src="${msg}"></embed>`
@@ -443,14 +461,14 @@ else{
   if (value == "mp4" 
   || value == "avi") {
 
-    message = `    <video id='imgMsg' controls>
+    message = `<video id='imgMsg' controls>
     <source src="${msg}" type="">
   
     Your browser does not support the video tag.
   </video>`
   }
   if (value == "pdf") {
-    message = `<embed id='imgMsg' src="${msg}"></embed>`
+    message = `<embed id='imgMsg' src="${msg}" type='application/pdf'>`
   }
   if (value == "vnd.android.package-archive") {
     message = `<embed id='imgMsg' src="${msg}"></embed>`
