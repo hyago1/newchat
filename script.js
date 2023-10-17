@@ -422,7 +422,7 @@ async function init() {
   const { data, error } = await _supabase
     .from("mensages")
     .select()
-    .eq("key_room_message", code);
+    .eq("key_room_message", code).order('id', { ascending: true });
 
     
   return data;
@@ -451,6 +451,14 @@ if (up == true) {
   if (value == "vnd.android.package-archive") {
     message = `<embed id='imgMsg' src="${msg}"></embed>`
   }
+  if (value == "mp3"|| value =="ogg") {
+    
+    message = `<audio id='imgMsg' controls>
+    <source src="${msg}" type="">
+  
+    Your browser does not support the video tag.
+  </audio>`
+  }
   
 }
 else{
@@ -472,6 +480,14 @@ else{
   }
   if (value == "vnd.android.package-archive") {
     message = `<embed id='imgMsg' src="${msg}"></embed>`
+  }
+  if (value == "mp3"|| value =="ogg") {
+    
+    message = `<audio id='imgMsg' controls>
+    <source src="${msg}" type="">
+  
+    Your browser does not support the video tag.
+  </audio>`
   }
 }
 
@@ -545,6 +561,7 @@ if (code != undefined || code != "NaN" || code != null) {
 
       let formatedTime = value.created_at.slice(0, 5);
       let datamsg = value.datamsg;
+      if (value.file == false) {
 
       if (
         value.datamsg.startsWith("http://") ||
@@ -554,7 +571,7 @@ if (code != undefined || code != "NaN" || code != null) {
         datamsg = `<a href='${value.datamsg}'>${value.datamsg}</a>`;
       }
 
-
+    }
 
       
   
