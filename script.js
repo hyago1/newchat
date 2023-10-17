@@ -15,6 +15,7 @@ var boxmsg = document.getElementById("box_Msg");
 var list = document.getElementById("list_ul");
 var listUsers = document.getElementById("list_users");
 var lisMyContacts = document.getElementById("list_myContact");
+var imagePreview = document.getElementById("imagePreview");
 var codeInfo = document.getElementById("code");
 var dt = new Date();
 let code;
@@ -28,6 +29,12 @@ let fileList;
 const fileSelector = document.getElementById('file');
 fileSelector.addEventListener('change', (event) => {
 fileList = event.target.files[0];
+
+console.log(fileList);
+
+document.getElementById('imagePreview').style.display = "flex"
+document.getElementById('blah').src=URL.createObjectURL(event.target.files[0]);
+
 
 });
 
@@ -403,6 +410,57 @@ async function init() {
   return data;
 }
 
+function typeMenssage(value, up, msg) {
+  let message
+
+if (up == true) {
+   if (value == "png" 
+  || value == "jpeg") {
+    message = `<img id='imgMsg' src="${msg}"></img>`
+  }
+  if (value == "mp4" 
+  || value == "avi") {
+
+    message = `    <video id='imgMsg' controls>
+    <source src="${msg}" type="">
+  
+    Your browser does not support the video tag.
+  </video>`
+  }
+  if (value == "pdf") {
+    message = `<embed id='imgMsg' src="${msg}"></embed>`
+  }
+  if (value == "vnd.android.package-archive") {
+    message = `<embed id='imgMsg' src="${msg}"></embed>`
+  }
+  
+}
+else{
+  if (value == "png" 
+  || value == "jpeg") {
+    message = `<img id='imgMsg' src="${msg}"></img>`
+  }
+  if (value == "mp4" 
+  || value == "avi") {
+
+    message = `    <video id='imgMsg' controls>
+    <source src="${msg}" type="">
+  
+    Your browser does not support the video tag.
+  </video>`
+  }
+  if (value == "pdf") {
+    message = `<embed id='imgMsg' src="${msg}"></embed>`
+  }
+  if (value == "vnd.android.package-archive") {
+    message = `<embed id='imgMsg' src="${msg}"></embed>`
+  }
+}
+
+ 
+  console.log(message);
+  return message
+}
 
 
 
@@ -433,13 +491,6 @@ const updatePage = async () => {
   console.log("esse email ja existe");
   }
      
-
-
-
-
-
-
-
 
 
 
@@ -502,7 +553,8 @@ if (value.file == true) {
       </div>
 
       <div class='info' > 
-      <span class="msg"><img id='imgMsg' src="${value.datamsg}"></img></span>
+      <span class="msg">
+      ${typeMenssage(value.typeFile, true,value.datamsg)}
       <span id='hour'>${formatedTime}</span>
       
       </div>
@@ -555,8 +607,6 @@ function logoutGoogle() {
 
 
 
-
-
 _supabase
   .channel("custom-all-channel")
   .on(
@@ -602,14 +652,16 @@ if (payload.new.file == false) {
   
          <div class='info' > 
          <span class="msg">
-         <img id='imgMsg' src="${datamsg}"></img>
+        ${typeMenssage(payload.new.typeFile, false, payload.new.datamsg)}
          </span>
          <span id='hour'>${formatedTime}</span>
          
          </div>
         
      </div>
-     </li>`;}else{
+     </li>`;
+    }
+    else{
       list.innerHTML += `<li >
       <div id='${payload.new.id}' class="ball_msg">
       <div class='info_details'>  
@@ -694,6 +746,7 @@ document.addEventListener("visibilitychange", async function () {
   if (
     document.visibilityState == "visible"
   ) {
+    list.innerHTML = ""
     msg = []
     console.log("");
 const { data, error } = await _supabase
@@ -705,6 +758,7 @@ const { data, error } = await _supabase
   }
   else{
     msg = []
+    list.innerHTML = ""
     const { data, error } = await _supabase
 .from('users')
 .update({ online: false })
@@ -731,7 +785,7 @@ const { data, error } = await _supabase
 async function send() {
 
   console.log(fileList);
-
+  document.getElementById('imagePreview').style.display = "none"
 
 console.log(fileList);
 if (fileList == undefined) {
@@ -763,6 +817,7 @@ if (fileList == undefined) {
 }
 else{
 
+
   const { dataa, error } = await _supabase
   .storage
   .from('img')
@@ -771,11 +826,12 @@ else{
   upsert: false
   })
 
+
   const { data } = _supabase
   .storage
   .from('img')
-  .getPublicUrl(fileList.name)
-console.log(data);
+  .getPublicUrl(fileList.name )
+
 
 let urlImg = data;
 
@@ -792,10 +848,11 @@ let urlImg = data;
         created_at: getHour(),
         key_room_message: code,
         nickname: name,
-        file:true
+        file: true,
+        typeFile: fileList.type.split("/")[1],
       });
       document.getElementById("box_Msg").value = "";
-    
+      fileSelector.value = ''
   }
   else{
     alert("Escolha algum usuario para conversar ")
@@ -807,6 +864,13 @@ let urlImg = data;
 }
   
 }
+
+
+function deleteImg() {
+  fileSelector.value = ''
+document.getElementById('imagePreview').style.display = "none"
+}
+
 function openListAllUsers(){
   let state
   listUsers.style.display = "initial"

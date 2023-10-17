@@ -30,6 +30,20 @@ align-items: center;
 background-color: rgb(38, 43, 44);
 padding: 5px;
 }
+.deleteImageFile{
+    border-radius: 50%;
+    color: red;
+    background-color: #243036;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8px;
+    height: 8px;
+    text-align: center;
+    position: relative;
+    padding: 8px;
+    border: none;
+}
 .list_users{
     width: 100%;
     height: auto;
@@ -223,6 +237,7 @@ h2{
  padding: 15px;
     width: 100%;
     display: flex;
+    flex-direction: column;
    position: fixed;
    bottom: 0px;
     align-items: center;
@@ -392,6 +407,19 @@ border-radius: 0px  7px 7px 0px ;
 #imgMsg{
     max-width: 100%;
     cursor: pointer;
+}
+#imagePreview{
+    -webkit-box-shadow:none;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    width: 13em;
+    height: 13em;
+    background-color: transparent;
+    border-radius: 50%;
+    
+    top: -2em;
 }
 #imgMsg:hover {
 
