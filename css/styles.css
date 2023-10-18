@@ -271,9 +271,9 @@ ul{
 }
 
 .msg{
-    font-family: 'Inter', sans-serif;
-    font-family: 'Raleway', sans-serif;
-    color: white;
+    font-family: 'Nunito', sans-serif;
+    color: rgb(236, 236, 236);
+    font-size: 13px;
     margin: 4px;
     margin-right: 15px;
     width: auto;
@@ -289,7 +289,7 @@ ul{
 
 
 #hour{
-
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     position: relative;
     top: 10px;
@@ -302,7 +302,7 @@ ul{
     background-color: #192227;
     color: aliceblue;
     padding: 8px;
-    border-radius:10px;
+    border-radius:16px;
     margin: 5px;
 
     width: fit-content;
@@ -406,11 +406,11 @@ justify-content: center;
 align-items: center;
 font-family:cursive;
     background-color: transparent;
-border-radius: 0px  7px 7px 0px ;
+border-radius: 0px  15px 15px 0px ;
 
 }
 #btn:hover{
- background-color: rgb(74, 77, 78);;;
+ background-color: rgb(74, 77, 78);
  
    transition: 0.4s;
 
