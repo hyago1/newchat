@@ -49,7 +49,7 @@ if (fileList.type.split("/")[0] == "image") {
   }
   console.log("ok");
   document.getElementById('blah').style.display = "none"
-  imagePreview.innerHTML += `<label id="labelFile">${fileList.name}</label>`
+  imagePreview.innerHTML += `<label id="labelFile"><i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i> ${" "+fileList.name}</label>`
 }
 
 

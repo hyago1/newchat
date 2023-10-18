@@ -39,10 +39,15 @@ padding: 5px;
     align-items: center;
     width: 8px;
     height: 8px;
+    margin-top: 3px;
     text-align: center;
     position: relative;
     padding: 15px;
     border: none;
+}
+.deleteImageFile:hover {
+
+background-color: #2b383f;
 }
 .list_users{
     width: 100%;
@@ -161,13 +166,11 @@ border-bottom: 1px solid grey;
     padding: 5px;
     padding-inline: 8px;
     position: absolute;
-    right: 5px;
+    right: 0px;
     background-color: transparent;
     border: none;
 }
-#close:hover{
-    background-color: #243036;
-}
+
 
 
 
@@ -251,7 +254,7 @@ margin-top: 2px;
 -webkit-box-shadow: 1px 10px 60px 0px rgba(0,0,0);
 -moz-box-shadow: 1px 10px 60px 0px rgba(0,0,0);
 display: flex;
-    margin-right: 5px;
+   
     background-color: rgb(37, 40, 41);
 width: 92%;
 height: auto;
@@ -373,7 +376,10 @@ height: 100%;
 input[type='file'] {
     display: none
   }
+
  label{
+    cursor: pointer;
+    opacity: 0.8;
     text-align: center;
     border-radius: 10px;
     font-weight: bold;
@@ -384,6 +390,11 @@ align-items: center;
     padding-inline: 15px;
     background-color: #2e2e2e;
  }
+ #labelFile{
+    opacity: 0.8;
+    padding: 16px;
+    background-color: #4b4b4b;
+  }
 #btn{
    
     color: rgb(153, 153, 153);
