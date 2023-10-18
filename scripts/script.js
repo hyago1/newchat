@@ -49,7 +49,8 @@ if (fileList.type.split("/")[0] == "image") {
   }
   console.log("ok");
   document.getElementById('blah').style.display = "none"
-  imagePreview.innerHTML += `<label id="labelFile"><i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i> ${" "+fileList.name}</label>`
+  imagePreview.innerHTML += `<label id="labelFile">
+  <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i> ${" "+fileList.name}</label>`
 }
 
 
@@ -450,7 +451,7 @@ if (up == true) {
     message = `<embed id='imgMsg' src="${msg}" type='application/pdf'></embed>`
   }
   if (value == "vnd.android.package-archive") {
-    message = `<embed id='imgMsg' src="${msg}"></embed>`
+    message = `<div id='imgMsg' src=" ${msg}"> <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i></div>`
   }
   if (value == "mp3"|| value =="ogg"|| value =="aac"|| value =="wav") {
     
@@ -481,7 +482,8 @@ else{
     message = `<embed id='imgMsg' src="${msg}" type='application/pdf'>`
   }
   if (value == "vnd.android.package-archive") {
-    message = `<embed id='imgMsg' src="${msg}"></embed>`
+    message = `<div id='imgMsg' src=" ${msg}"> <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i></div>`
+
   }
   if (value == "mp3"|| value =="ogg"|| value =="aac"|| value =="wav") {
     
