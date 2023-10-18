@@ -451,7 +451,13 @@ if (up == true) {
     message = `<embed id='imgMsg' src="${msg}" type='application/pdf'></embed>`
   }
   if (value == "vnd.android.package-archive") {
-    message = `<div id='imgMsg' src=" ${msg}"> <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i></div>`
+    message = `<div id='imgMsg' >
+    <div class='fileMsg'> 
+    <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i> 
+    <a href='${msg}' style='color:grey'>File Apk  </a> 
+     <i class="fa-solid fa-download fa-2xs"></i>
+     </div>
+      </div>`
   }
   if (value == "mp3"|| value =="ogg"|| value =="aac"|| value =="wav") {
     
@@ -482,8 +488,13 @@ else{
     message = `<embed id='imgMsg' src="${msg}" type='application/pdf'>`
   }
   if (value == "vnd.android.package-archive") {
-    message = `<div id='imgMsg' src=" ${msg}"> <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i></div>`
-
+    message = `<div id='imgMsg' >
+    <div class='fileMsg'> 
+    <i class="fa-solid fa-file fa-2x" style='margin-right:10px'></i> 
+    <a href='${msg}' style='color:grey'>File Apk  </a> 
+     <i class="fa-solid fa-download fa-2xs"></i>
+     </div>
+      </div>`
   }
   if (value == "mp3"|| value =="ogg"|| value =="aac"|| value =="wav") {
     
@@ -904,7 +915,7 @@ let urlImg = data;
 
 
 async function deleteImg() {
-  fileSelector.value = ''
+  fileList = undefined
 document.getElementById('imagePreview').style.display = "none"
 
 }
