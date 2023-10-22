@@ -549,11 +549,12 @@ align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
-    #list_ul li img{
-        width: 20px;
+  #imgProfileMenssage{
+        width: 25px;
         border-radius: 50%;
-        height: 20px;
+        height: 25px;
     }
+
     .infoContacts div{
         padding-inline: 2px;
         display: flex;
