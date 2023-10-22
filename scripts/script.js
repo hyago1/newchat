@@ -58,10 +58,6 @@ if (fileList.type.split("/")[0] == "image") {
 });
 
 
-
-
-
-
 async function getUsers(params) {
   let { data: users, error } = await _supabase
   .from("users")
@@ -586,6 +582,7 @@ if (code != undefined || code != "NaN" || code != null) {
 
 if (value.file == true) {
   list.innerHTML += `<li>
+  <img src='${value.imgProfile}'></img>
   <div class="ball_msg">
   <div class='info_details'>  
 
@@ -607,6 +604,7 @@ if (value.file == true) {
 
 }else{
     list.innerHTML += `<li>
+    <img src='${value.imgProfile}'></img>
     <div class="ball_msg">
     <div class='info_details'>  
 
@@ -684,6 +682,7 @@ if (payload.new.file == false) {
 
         if (payload.new.file == true) {
           list.innerHTML += `<li >
+          <img src='${payload.new.imgProfile}'></img>
         <div id='${payload.new.id}' class="ball_msg">
         <div class='info_details'>  
  
@@ -706,6 +705,7 @@ if (payload.new.file == false) {
     }
     else{
       list.innerHTML += `<li >
+      <img src='${payload.new.imgProfile}'></img>
       <div id='${payload.new.id}' class="ball_msg">
       <div class='info_details'>  
 
@@ -854,6 +854,8 @@ if (fileList == undefined) {
         created_at: getHour(),
         key_room_message: code,
         nickname: name,
+        imgProfile: data.session.user.user_metadata.avatar_url
+        
       });
       document.getElementById("box_Msg").value = "";
     }
@@ -898,6 +900,7 @@ let urlImg = data;
         nickname: name,
         file: true,
         typeFile: fileList.type.split("/")[1],
+        imgProfile: data.session.user.user_metadata.avatar_url
       });
       document.getElementById("box_Msg").value = "";
       fileSelector.value = ''

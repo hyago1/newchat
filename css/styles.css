@@ -286,6 +286,15 @@ ul{
 
     
 }
+#list_ul li{
+display: flex;
+align-items: center;
+}
+#list_ul li img{
+    width: 25px;
+    border-radius: 50%;
+    height: 25px;
+}
 
 .msg{
     font-family: 'Nunito', sans-serif;
@@ -540,6 +549,11 @@ align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
+    #list_ul li img{
+        width: 20px;
+        border-radius: 50%;
+        height: 20px;
+    }
     .infoContacts div{
         padding-inline: 2px;
         display: flex;
