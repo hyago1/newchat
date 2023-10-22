@@ -141,7 +141,7 @@ valueid = value.id
     <div class='divMainContacts'">  
      <div class='userContactInfo'>
             <div id='nicks'> 
-            <img onclick="openMenu()"class='userContactImgProfile' src='${value.imgProfile}'></img>
+            <img class='userContactImgProfile' src='${value.imgProfile}'></img>
 
       <span id='status${value.id}'> ${value.name}</span><br>
             </div>
