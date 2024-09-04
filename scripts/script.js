@@ -279,7 +279,6 @@ _supabase
 if (document.getElementById('status'+payload.new.id)) {
   document.getElementById('status'+payload.new.id).style.color =  'white'    
 }
-    
   
   }
 })
@@ -518,8 +517,8 @@ const updatePage = async () => {
   let { data: users } = await _supabase
   .from("users")
   .select("email, id").eq("email", data.session.user.user_metadata.email);
-  console.log("updatePage()");
-  mycode = users[0].id
+ 
+
 
   if (users == 0) {
      const { error } = await _supabase.from("users").insert({
@@ -821,15 +820,6 @@ if (document.getElementById('status'+valueid)) {
 
 
 
-
-
-
-
-
-
-
-
-
 async function send() {
 
   console.log(fileList);
@@ -840,11 +830,11 @@ if (fileList == undefined) {
   if (code !=null) {
     const { data } = await _supabase.auth.getSession();
     let valueBoxMenssage = boxmsg.value;
-  let name
-    let { data: users, error } = await _supabase
-    .from("users")
-    .select("name").eq("email" ,data.session.user.email );
-  name = users[0].name
+  let name = "";
+  //   let { data: users, error } = await _supabase
+  //   .from("users")
+  //   .select("name").eq("email" ,data.session.user.email );
+  // name = users[0].name
   
   
   
